@@ -1,0 +1,308 @@
+.storeCard {
+  display: none;
+  width: 100%;
+  padding: 24px;
+  box-shadow: 0px 0px 8px 2px #2525251a;
+  background-image: url('/assets/background.svg');
+  background-size: 120px;
+  background-repeat: repeat-x;
+  border-radius: 12px;
+  flex-direction: column;
+  gap: 16px;
+  text-align: center;
+  box-sizing: border-box;
+}
+.storeCardFullWidth {
+  display: flex;
+}
+
+.storeLogoContainer {
+  backdrop-filter: blur(7px);
+  border-radius: 50%;
+  width: 132px;
+  height: 132px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  border: 2px solid var(--background-weak);
+}
+
+.storeCardSubtitle {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  text-align: center;
+
+  color: #7d7d7d;
+  text-transform: uppercase;
+}
+
+.storeCardDescription {
+  color: #585858;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.storeCardDisclaimer {
+  color: #7d7d7d;
+  font-size: 12px;
+  line-height: 16px;
+  font-style: italic;
+}
+
+.storeTitle {
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 32px;
+  letter-spacing: -0.26px;
+}
+
+.integrationsBar {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 72px;
+}
+
+.integrationDocs {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background-color: var(--background-weak);
+  border: 1px solid var(--border-color);
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  padding: 4px 12px;
+}
+
+.integrationDocs a {
+  color: inherit;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+}
+
+.integrationsBarHeading {
+  font-weight: 500;
+}
+
+.integrationsBarContent {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.integrationsBarContent > * {
+  width: 100%;
+}
+
+.integrationsBarControls {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.integrationsBarControls > * {
+  width: 100%;
+}
+
+.flowPicker,
+.integrationPicker {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
+  box-shadow: 0px 0px 0px 1.5px #fafafa;
+}
+.flowPicker:hover,
+.integrationPicker:hover {
+  background-color: var(--background-weak);
+}
+
+.flowPicker {
+  anchor-name: --flow-picker-anchor;
+}
+
+.integrationPicker {
+  anchor-name: --integration-picker-anchor;
+}
+
+.pickerPopover {
+  top: anchor(bottom);
+  left: anchor(left);
+  margin: 4px 0 0 0;
+  padding: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+  background: var(--background-color);
+  box-shadow: 0px 4px 8px 0px #25252514;
+  backdrop-filter: blur(4px);
+}
+
+.flowPickerPopover {
+  position-anchor: --flow-picker-anchor;
+  width: 242px;
+}
+
+.integrationPickerPopover {
+  position-anchor: --integration-picker-anchor;
+  width: 250px;
+}
+
+.popoverOption {
+  padding: 8px 16px;
+  cursor: pointer;
+  border: none;
+  width: 100%;
+  border-radius: 4px;
+  background: var(--background-color);
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.popoverOption:disabled {
+  cursor: not-allowed;
+  color: black;
+  opacity: 0.5;
+  background-color: transparent;
+}
+
+.popoverOptionTitle {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+}
+.popoverOptionDescription {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  opacity: 0.8;
+}
+
+.popoverOption:hover {
+  background-color: var(--background-weak);
+}
+
+.checkoutButton {
+  display: flex;
+  justify-content: center;
+  background-color: var(--background-primary);
+  color: white;
+}
+.checkoutButton:hover {
+  background-color: var(--background-primary);
+}
+.checkoutButton:disabled {
+  background-color: var(--background-primary);
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.cartItemCount {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  display: flex;
+  background-color: #fb5607;
+  color: white;
+  border-radius: 4px;
+  padding: 2px 4px;
+  font-size: 12px;
+}
+
+.addPaymentMethodCallout {
+  background-color: var(--background-primary);
+  color: white;
+  padding: 6px 6px 6px 16px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 8px;
+  margin-bottom: 32px;
+}
+
+.addPaymentMethodText {
+  padding: 6px 0;
+}
+.addPaymentMethodButton {
+  background-color: transparent;
+  border: none;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-wrap: nowrap;
+}
+.addPaymentMethodButton:hover {
+  background-color: inherit;
+}
+.addPaymentMethodButton:disabled {
+  background-color: inherit;
+  color: inherit;
+  opacity: 0.5;
+}
+
+.section {
+  transition: opacity 0.3s ease;
+}
+
+.featuredSection {
+  margin-bottom: 80px;
+}
+
+.disabledSection {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.dottedLine {
+  height: 1px;
+  border: none;
+  background: repeating-linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.1) 0px 4px,
+    transparent 4px 8px
+  );
+}
+
+@media screen and (min-width: 768px) {
+  .integrationsBarContent {
+    flex-direction: row;
+  }
+
+  .integrationsBarContent > * {
+    width: unset;
+  }
+
+  .integrationsBarControls > * {
+    width: unset;
+  }
+
+  .addPaymentMethodCallout {
+    flex-direction: row;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .storeCard {
+    display: flex;
+    width: 300px;
+  }
+  .storeCardFullWidth {
+    display: none;
+  }
+  .integrationsBar {
+    margin-bottom: 32px;
+  }
+}

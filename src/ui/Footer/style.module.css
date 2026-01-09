@@ -1,0 +1,26 @@
+.footer {
+  display: flex;
+  padding: 16px 0;
+  border-top: 1px solid var(--border-color);
+}
+
+.footerInner {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  gap: 8px;
+}
+
+.footerLinks a {
+  padding: 0 8px;
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+@media screen and (min-width: 768px) {
+  .footerInner {
+    flex-direction: row;
+  }
+}

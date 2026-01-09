@@ -1,0 +1,37 @@
+.button {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 12px 16px;
+  border-radius: 1000px;
+  background-color: var(--background-primary);
+  box-shadow: 0px 0px 0px 1.5px var(--background-primary);
+  border: none;
+  color: #ffffff;
+  gap: 8px;
+}
+
+.button:hover {
+  background-color: var(--background-primary);
+  box-shadow: 0px 0px 0px 3px #bad1fc;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.buttonLoadingSpinner {
+  width: 16px;
+  height: 16px;
+  animation: spin 1s linear infinite;
+}

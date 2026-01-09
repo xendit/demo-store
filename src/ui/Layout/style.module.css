@@ -1,0 +1,60 @@
+.page {
+  display: flex;
+  padding: 24px 0;
+}
+
+.container {
+  display: flex;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.columns {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  width: 100%;
+}
+
+.columns > .wide {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+@media screen and (min-width: 480px) {
+  .page {
+    padding: 32px 0;
+  }
+  .container {
+    width: 448px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .container {
+    width: 736px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .page {
+    padding: 64px 0;
+  }
+  .container {
+    width: 992px;
+  }
+  .columns {
+    flex-direction: row;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .container {
+    width: 1168px;
+  }
+  .columns {
+    gap: 64px;
+  }
+}
