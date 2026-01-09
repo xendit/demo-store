@@ -23,13 +23,6 @@
   background: none;
 }
 
-.paymentContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 32px;
-}
-
 .orderSummaryBox {
   border: 1px solid rgba(0, 0, 0, 0.05);
   border-radius: 8px;
