@@ -4,7 +4,7 @@ import data from "../data.json";
 import { CheckoutPage } from "./pages/Checkout/Checkout";
 import { PaymentSuccessPage } from "./pages/PaymentSuccess/PaymentSuccess";
 import { StorePage } from "./pages/Store/Store";
-import type { CartItem, PageType } from "./types";
+import type { CartItem, PageType } from "./types/store";
 
 const App: React.FC = () => {
   const queryParams = new URLSearchParams(window.location.search);

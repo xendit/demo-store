@@ -1,21 +1,21 @@
-import { useMemo, useRef } from 'react';
-import config from '../../config.json';
-import ArrowSquareOut from '../../icons/ArrowSquareOut';
-import Caret from '../../icons/Caret';
-import Cart from '../../icons/Cart';
-import type { CartItem as CartItemType } from '../../types';
-import { ButtonLoadingSpinner } from '../../ui/Button/Button';
-import classes from './style.module.css';
+import { useMemo, useRef } from "react";
+import config from "../../config.json";
+import ArrowSquareOut from "../../icons/ArrowSquareOut";
+import Caret from "../../icons/Caret";
+import Cart from "../../icons/Cart";
+import type { CartItem as CartItemType } from "../../types/store";
+import { ButtonLoadingSpinner } from "../../ui/Button/Button";
+import classes from "./style.module.css";
 
 export const IntegrationsBar: React.FC<{
   cart: CartItemType[];
   checkingOut: boolean;
   onCheckout: () => void;
-  selectedFlow: typeof config.flows[number];
-  onChangeFlow: (flow: typeof config.flows[number]) => void;
-  selectedIntegration: typeof config.integrations[number];
+  selectedFlow: (typeof config.flows)[number];
+  onChangeFlow: (flow: (typeof config.flows)[number]) => void;
+  selectedIntegration: (typeof config.integrations)[number];
   onChangeIntegration: (
-    integration: typeof config.integrations[number]
+    integration: (typeof config.integrations)[number]
   ) => void;
 }> = (props) => {
   const {
@@ -25,7 +25,7 @@ export const IntegrationsBar: React.FC<{
     selectedFlow,
     onChangeFlow,
     selectedIntegration,
-    onChangeIntegration
+    onChangeIntegration,
   } = props;
   const flowPopoverRef = useRef<HTMLDivElement>(null);
   const integrationButtonRef = useRef<HTMLDivElement>(null);
@@ -39,7 +39,7 @@ export const IntegrationsBar: React.FC<{
     return link?.url;
   }, [selectedFlow, selectedIntegration]);
 
-  const handleSelectFlow = (flow: typeof config.flows[number]) => {
+  const handleSelectFlow = (flow: (typeof config.flows)[number]) => {
     onChangeFlow(flow);
     if (selectedIntegration.supportsFlows.indexOf(flow.value) === -1) {
       const compatibleIntegration = config.integrations.find((integration) =>
@@ -70,8 +70,8 @@ export const IntegrationsBar: React.FC<{
               id="flow-picker-popover"
               className={[
                 classes.flowPickerPopover,
-                classes.pickerPopover
-              ].join(' ')}
+                classes.pickerPopover,
+              ].join(" ")}
               popover="auto"
               ref={flowPopoverRef}
             >
@@ -106,8 +106,8 @@ export const IntegrationsBar: React.FC<{
               id="integration-picker-popover"
               className={[
                 classes.integrationPickerPopover,
-                classes.pickerPopover
-              ].join(' ')}
+                classes.pickerPopover,
+              ].join(" ")}
               popover="auto"
               ref={integrationButtonRef}
             >

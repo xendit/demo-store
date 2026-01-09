@@ -1,7 +1,7 @@
 import data from "../../../data.json";
 import ArrowLeft from "../../icons/ArrowLeft";
 import { XenditComponentsPayment } from "../../integrations/XenditComponents";
-import type { CartItem as CartItemType, PageType } from "../../types";
+import type { CartItem as CartItemType, PageType } from "../../types/store";
 import {
   Column,
   Columns,
@@ -40,7 +40,6 @@ export const CheckoutPage: React.FC<{
                   alert(`Error: ${message}`);
                   goToPage("store");
                 }}
-                goToPage={goToPage}
                 componentsKey={componentsKey}
               />
             </WideColumn>

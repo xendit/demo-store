@@ -2,7 +2,11 @@ import { useCallback, useMemo, useState } from "react";
 import data from "../../../data.json";
 import config from "../../config.json";
 import ArrowRight from "../../icons/ArrowRight";
-import type { CartItem as CartItemType, PageType, Product } from "../../types";
+import type {
+  CartItem as CartItemType,
+  PageType,
+  Product,
+} from "../../types/store";
 import { ButtonLoadingSpinner } from "../../ui/Button/Button";
 import { Footer } from "../../ui/Footer/Footer";
 import { Header } from "../../ui/Header/Header";

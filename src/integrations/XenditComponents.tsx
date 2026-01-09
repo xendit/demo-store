@@ -1,5 +1,4 @@
 import { useCallback, useLayoutEffect, useRef, useState } from "react";
-import type { PageType } from "../types.js";
 import type {
   XenditComponents,
   XenditFatalErrorEvent,
@@ -10,9 +9,8 @@ import classes from "./style.module.css";
 export const XenditComponentsPayment: React.FC<{
   onSuccess: () => void;
   onFail: (message: string) => void;
-  goToPage: (page: PageType) => void;
   componentsKey: string;
-}> = ({ onSuccess, onFail, goToPage, componentsKey }) => {
+}> = ({ onSuccess, onFail, componentsKey }) => {
   const el = useRef<HTMLDivElement | null>(null);
   const sdkRef = useRef<XenditComponents | null>(null);
 
@@ -50,7 +48,7 @@ export const XenditComponentsPayment: React.FC<{
         sdkRef.current?.destroyComponent(cardsComponent);
       }
     };
-  }, [goToPage, componentsKey]);
+  }, [componentsKey]);
 
   useLayoutEffect(() => {
     if (!sdkRef.current) return;

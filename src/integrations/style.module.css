@@ -1,0 +1,37 @@
+.submit {
+  margin-top: 32px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  border: 1px solid #1762ee;
+  background-color: #1762ee;
+  color: white;
+  padding: 12px 18px;
+  border-radius: 100px;
+  font-weight: bold;
+}
+
+.submit:hover {
+  background-color: #1762ee;
+}
+
+.submit:focus {
+  box-shadow: 0px 0px 0px 3px #bad1fc;
+  outline: none;
+}
+
+.xenditComponentContainer {
+  width: 350px;
+}
+
+.loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

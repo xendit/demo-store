@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { useMemo } from "react";
 import data from "../../../data.json";
-import type { Product } from "../../types";
+import type { Product } from "../../types/store";
 import classes from "./style.module.css";
 
 const EXCHANGE_RATES: { [currency: string]: number } = data.exchangeRates;
