@@ -1,5 +1,5 @@
-import { Container } from '../Layout/Layout';
-import classes from './style.module.css';
+import { Container } from "../Layout/Layout";
+import classes from "./style.module.css";
 
 export const Footer: React.FC = () => {
   return (
@@ -8,7 +8,8 @@ export const Footer: React.FC = () => {
         <div className={classes.footerInner}>
           <p>&copy; 2025 Xendit, Inc.</p>
           <p className={classes.footerLinks}>
-            <a href="#">API Reference</a> · <a href="#">Documentation</a>
+            <a href="https://docs.xendit.co/apidocs">API Reference</a> ·{" "}
+            <a href="https://docs.xendit.co/docs/overview">Documentation</a>
           </p>
         </div>
       </Container>
