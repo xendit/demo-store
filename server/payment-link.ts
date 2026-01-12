@@ -40,10 +40,11 @@ const makeSessionForPaymentLink = async (
 
   const now = new Date();
   const successReturnUrl = config.successUrl.match(
-    /^https:\/\/([a-z0-9-]+\.)+[a-z]{2,}(:\d{1,5})?(\/[^\s]*)?$/i
+    /^(https:\/\/)([a-zA-Z0-9.-]+\.[a-zA-Z0-9-]+)(\/[^\s#]*)?(\?[^\s#]*)?(#\S*)?$/i
   )
     ? config.successUrl
     : undefined;
+
   const payload = {
     reference_id: `checkout-demo-${now.getTime()}`,
     customer: {
