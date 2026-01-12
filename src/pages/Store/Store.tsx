@@ -148,8 +148,7 @@ export const StorePage: React.FC<{
               {selectedFlow.omitsItems ? (
                 <div className={classes.addPaymentMethodCallout}>
                   <span className={classes.addPaymentMethodText}>
-                    Please add your payment method first before taking a
-                    plushxie home
+                    Add a payment method for faster checkout later
                   </span>
 
                   <button
@@ -221,8 +220,8 @@ const StoreCard: React.FC<{
       </p>
       <div className={classes.dottedLine}></div>
       <p className={classes.storeCardDisclaimer}>
-        To keep it fair for everyone,{" "}
-        <strong>limit is 1 of each badger per order.</strong>
+        This is a <strong>demo store</strong> for testing purposes only.{" "}
+        <strong>No real transactions will be processed.</strong>
       </p>
     </div>
   );

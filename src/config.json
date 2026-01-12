@@ -70,6 +70,11 @@
       "flow": "pay_save",
       "integration": "session",
       "url": "https://docs.xendit.co/docs/pay-and-save-2"
+    },
+    {
+      "flow": "pay",
+      "integration": "invoice",
+      "url": "https://archive.docs.xendit.co/payment-link/single-payment-link"
     }
   ]
 }
