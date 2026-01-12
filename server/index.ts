@@ -1,5 +1,7 @@
 import express from "express";
 import path from "path";
+import https from "https";
+import fs from "fs";
 
 import config from "./config";
 import makeSessionForPaymentLink from "./payment-link";
@@ -62,6 +64,22 @@ app.post("/api/checkout", async (req, res) => {
 });
 
 const port = process.env.PORT || 8000;
-app.listen(port, () => {
-  console.log(`Demo Store Server is listening on port: ${port}`);
-});
+
+if (process.env.ENABLE_HTTPS !== "true") {
+  app.listen(port, () => {
+    console.log(`Demo Store Server is listening on port: ${port}`);
+  });
+} else {
+  // SSL Certificate configuration
+  const sslOptions = {
+    key: fs.readFileSync(process.env.SSL_KEY_PATH || "./certs/key.pem"),
+    cert: fs.readFileSync(process.env.SSL_CERT_PATH || "./certs/cert.pem"),
+  };
+
+  // Create HTTPS server
+  const server = https.createServer(sslOptions, app);
+
+  server.listen(port, () => {
+    console.log(`Demo Store Server (HTTPS) is listening on port: ${port}`);
+  });
+}
