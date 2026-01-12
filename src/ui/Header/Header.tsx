@@ -7,6 +7,7 @@ const CURRENCY_LABELS: {
   [currency: string]: { symbol: string; country: string };
 } = {
   IDR: { symbol: "IDR Rp", country: "Indonesia" },
+  MYR: { symbol: "MYR RM", country: "Malaysia" },
   PHP: { symbol: "PHP ₱", country: "Philippines" },
   THB: { symbol: "THB ฿", country: "Thailand" },
   SGD: { symbol: "SGD $", country: "Singapore" },

@@ -111,6 +111,7 @@
     ],
     "exchangeRates": {
         "IDR": 15000,
+        "MYR": 4,
         "PHP": 50,
         "THB": 35,
         "SGD": 1.35,
