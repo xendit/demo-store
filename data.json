@@ -1,0 +1,120 @@
+{
+    "products": [
+        {
+            "id": 1,
+            "title": "Joyful Badger",
+            "price": 20,
+            "description": "This adorable, glasses-wearing plushie is here to bring some serious joy to your workspace.",
+            "image": "/assets/joyful.png",
+            "isFeatured": true
+        },
+        {
+            "id": 2,
+            "title": "Angry Badger",
+            "price": 20,
+            "description": "Angry Badger is the ultimate desk companion for high-stress projects. He feels your pain.",
+            "image": "/assets/angry.png",
+            "isFeatured": true
+        },
+        {
+            "id": 3,
+            "title": "Exhausted Badger",
+            "price": 10,
+            "description": "0% battery remaining, but still trying",
+            "image": "/assets/exhausted.png"
+        },
+        {
+            "id": 4,
+            "title": "Waving Badger",
+            "price": 20,
+            "description": "A friendly ‘Hey there!’ to start things off",
+            "image": "/assets/waving.png"
+        },
+        {
+            "id": 5,
+            "title": "Reading Badger",
+            "price": 20,
+            "description": "Deep in the details and soaking it all in",
+            "image": "/assets/reading.png"
+        },
+        {
+            "id": 6,
+            "title": "Fighting Badger",
+            "price": 50,
+            "description": "Gloves up. Let’s tackle this problem",
+            "image": "/assets/fight.png"
+        },
+        {
+            "id": 7,
+            "title": "Thinking Badger",
+            "price": 50,
+            "description": "Connecting the dots and plotting the next move.",
+            "image": "/assets/thinking.png"
+        },
+        {
+            "id": 8,
+            "title": "Meditating Badger",
+            "price": 10,
+            "description": "Finding inner peace amidst the chaos",
+            "image": "/assets/meditate.png"
+        },
+        {
+            "id": 9,
+            "title": "Laughing Badger",
+            "price": 20,
+            "description": "Good vibes and belly laughs only",
+            "image": "/assets/laugh.png",
+            "isSoldOut": true
+        },
+        {
+            "id": 10,
+            "title": "Sleepy Badger",
+            "price": 10,
+            "description": "System requires a recharge. Nap imminent",
+            "image": "/assets/sleepy.png",
+            "isSoldOut": true
+        }
+    ],
+    "colors": [
+        "#eef3fc",
+        "#eef0f8",
+        "#f2f3ee",
+        "#f2f8f1",
+        "#f2f9f4",
+        "#f2fcf7",
+        "#f7f1fd",
+        "#f9f9f4",
+        "#faf6f8",
+        "#fbf3f2",
+        "#f1fdfd",
+        "#f2f8fb",
+        "#f2f8f8",
+        "#f2f3f7",
+        "#eefcef",
+        "#f4f6f6",
+        "#effaf9",
+        "#faf4f0",
+        "#fceef7",
+        "#effdee",
+        "#f0f2fd",
+        "#f0faf0",
+        "#f6effc",
+        "#f9eefb",
+        "#faf5ee",
+        "#fcf3fa",
+        "#faf5f3",
+        "#fcfaf0",
+        "#f4f1ee",
+        "#f3eff3",
+        "#faf1f6",
+        "#fdf9f7"
+    ],
+    "exchangeRates": {
+        "IDR": 15000,
+        "MYR": 4,
+        "PHP": 50,
+        "THB": 35,
+        "SGD": 1.35,
+        "VND": 23000
+    }
+}

@@ -1,0 +1,70 @@
+.header {
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 80px;
+  border-bottom: 1px solid var(--border-color);
+  background-color: var(--background-color);
+  z-index: 10;
+}
+
+.headerInner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.headerLogo {
+  cursor: pointer;
+  height: 48px;
+  width: 48px;
+}
+
+.headerControls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.currencyPicker {
+  anchor-name: --currency-picker-anchor;
+}
+
+.selectedCurrencyCountry {
+  display: none;
+}
+
+.currencyPickerPopover {
+  position-anchor: --currency-picker-anchor;
+  top: anchor(bottom);
+  left: auto;
+  right: anchor(right);
+  width: fit-content;
+  min-width: 100px;
+  margin: 4px 0 0 0;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--background-color);
+}
+
+.currencyOption {
+  padding: 8px 16px;
+  cursor: pointer;
+  border: none;
+  width: 100%;
+  border-radius: 4px;
+  background: var(--background-color);
+}
+
+.currencyOption:hover {
+  background-color: var(--background-weak);
+}
+
+@media screen and (min-width: 768px) {
+  .selectedCurrencyCountry {
+    display: inline;
+  }
+}
