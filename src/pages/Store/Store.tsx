@@ -75,6 +75,7 @@ export const StorePage: React.FC<{
         throw new Error(errorData.error || "Failed to create checkout");
       }
 
+      setCheckingOut(false);
       const data = await response.json();
       if (data.checkout_url) {
         window.location.assign(data.checkout_url);
@@ -84,9 +85,9 @@ export const StorePage: React.FC<{
         goToPage("checkout", { componentsKey: data.components_sdk_key });
       }
     } catch (error) {
+      setCheckingOut(false);
       window.alert((error as Error).message);
     }
-    setCheckingOut(false);
   }, [cart, selectedCurrency, selectedFlow, selectedIntegration, goToPage]);
 
   const handleAddToCart = useCallback(
