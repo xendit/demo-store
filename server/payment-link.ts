@@ -42,8 +42,11 @@ const makeSessionForPaymentLink = async (
   const successReturnUrl = config.successUrl.match(
     /^(https:\/\/)([a-zA-Z0-9.-]+\.[a-zA-Z0-9-]+)(\/[^\s#]*)?(\?[^\s#]*)?(#\S*)?$/i
   )
-    ? config.successUrl
+    ? new URL(config.successUrl)
     : undefined;
+
+  successReturnUrl?.searchParams.append("flow", data.flow);
+  successReturnUrl?.searchParams.append("integration", data.integration);
 
   const payload = {
     reference_id: `checkout-demo-${now.getTime()}`,
@@ -64,7 +67,7 @@ const makeSessionForPaymentLink = async (
     items,
     country: config.countryByCurrency[data.currency],
     description: "Checkout Demo with Sessions Payment Link",
-    success_return_url: successReturnUrl,
+    success_return_url: successReturnUrl?.toString(),
 
     // Set the right mode for Payment Link integration
     mode: "PAYMENT_LINK",

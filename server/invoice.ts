@@ -35,6 +35,11 @@ const makeInvoice = async (
   const feesTotal = fees.reduce((sum, fee) => sum + fee.value, 0);
 
   const now = new Date();
+
+  const successReturnUrl = new URL(config.successUrl);
+  successReturnUrl?.searchParams.append("flow", data.flow);
+  successReturnUrl?.searchParams.append("integration", data.integration);
+
   const payload = {
     payer_email: "invoice+demo@xendit.co",
     description: "Checkout Demo with Legacy Payment Link (Invoice)",
@@ -43,7 +48,7 @@ const makeInvoice = async (
     fees,
     currency: data.currency,
     amount: amount + feesTotal,
-    success_redirect_url: config.successUrl,
+    success_redirect_url: successReturnUrl.toString(),
   };
 
   const response = await fetch(POST_INVOICE_URL, {
