@@ -1,14 +1,14 @@
-import { useMemo } from 'react';
-import config from '../../config.json';
-import ArrowSquareOut from '../../icons/ArrowSquareOut';
-import { Header } from '../../ui/Header/Header';
-import { Container, Page } from '../../ui/Layout/Layout';
-import classes from './style.module.css';
+import { useMemo } from "react";
+import config from "../../config.json";
+import ArrowSquareOut from "../../icons/ArrowSquareOut";
+import { Header } from "../../ui/Header/Header";
+import { Container, Page } from "../../ui/Layout/Layout";
+import classes from "./style.module.css";
 
-export const PaymentSuccessPage: React.FC = () => {
+export const SuccessPage: React.FC = () => {
   const searchQuery = new URLSearchParams(window.location.search);
-  const flow = searchQuery.get('flow');
-  const integration = searchQuery.get('integration');
+  const flow = searchQuery.get("flow");
+  const integration = searchQuery.get("integration");
 
   const docs = useMemo(() => {
     if (!flow || !integration) {
@@ -34,7 +34,7 @@ export const PaymentSuccessPage: React.FC = () => {
     return {
       flow: selectedFlow.title,
       integration: selectedIntegration.title,
-      url: docsLink?.url
+      url: docsLink?.url,
     };
   }, [flow, integration]);
 
@@ -51,10 +51,15 @@ export const PaymentSuccessPage: React.FC = () => {
                 className={classes.cardImage}
                 src="/assets/success-badger.png"
               />
-              <h2 className={classes.cardSubtitle}>Payment Successful!</h2>
+              <h2 className={classes.cardSubtitle}>
+                {flow === "save"
+                  ? "Payment Method Added!"
+                  : "Payment Successful!"}
+              </h2>
               <p className={classes.cardDescription}>
-                Thank you for your purchase! Your badger is on his way to his
-                new home 🥰️
+                {flow === "save"
+                  ? "Your payment method has been successfully added."
+                  : "Thank you for your purchase! Your badger is on his way to his new home 🥰️"}
               </p>
               <a href="/" className={classes.backLink}>
                 &larr; Back to Plushxie Store
@@ -64,7 +69,7 @@ export const PaymentSuccessPage: React.FC = () => {
             {docs ? (
               <div className={classes.docs}>
                 <p className={classes.docsDescription}>
-                  You’ve just tested <strong>{docs.flow}</strong> using{' '}
+                  You’ve just tested <strong>{docs.flow}</strong> using{" "}
                   <strong>{docs.integration}</strong>
                 </p>
                 {docs.url ? (

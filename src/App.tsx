@@ -2,7 +2,7 @@ import { useCallback, useState } from "react";
 import config from "./config.json";
 import data from "../data.json";
 import { CheckoutPage } from "./pages/Checkout/Checkout";
-import { PaymentSuccessPage } from "./pages/PaymentSuccess/PaymentSuccess";
+import { SuccessPage } from "./pages/Success/Success";
 import { StorePage } from "./pages/Store/Store";
 import type { CartItem, PageType } from "./types/store";
 
@@ -15,7 +15,7 @@ const App: React.FC = () => {
     params: Record<string, unknown>;
   }>(
     paymentStatus === "success"
-      ? { page: "payment-success", params: {} }
+      ? { page: "success", params: {} }
       : { page: "store", params: {} }
   );
 
@@ -72,11 +72,13 @@ const App: React.FC = () => {
           cart={cart}
           goToPage={goToPage}
           selectedCurrency={selectedCurrency}
+          selectedFlow={selectedFlow}
+          selectedIntegration={selectedIntegration}
           componentsKey={currentPage.params.componentsKey as string}
         />
       );
-    case "payment-success":
-      return <PaymentSuccessPage />;
+    case "success":
+      return <SuccessPage />;
     default:
       return null;
   }

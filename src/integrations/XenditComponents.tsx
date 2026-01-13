@@ -10,7 +10,8 @@ export const XenditComponentsPayment: React.FC<{
   onSuccess: () => void;
   onFail: (message: string) => void;
   componentsKey: string;
-}> = ({ onSuccess, onFail, componentsKey }) => {
+  flow: string;
+}> = ({ onSuccess, onFail, componentsKey, flow }) => {
   const el = useRef<HTMLDivElement | null>(null);
   const sdkRef = useRef<XenditComponents | null>(null);
 
@@ -79,7 +80,9 @@ export const XenditComponentsPayment: React.FC<{
   return (
     <div className={classes.paymentContainer}>
       <div className={classes.xenditComponentContainer} ref={el}></div>
-      <Button onClick={onSubmit}>Submit Simulated Payment</Button>
+      <Button onClick={onSubmit}>
+        {flow === "save" ? "Simulate Save Payment Method" : "Simulate Pay Now"}
+      </Button>
       {loading || submitting ? (
         <div className={classes.loading}>
           <div className={classes.loadingSpinner}></div>

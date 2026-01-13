@@ -1,6 +1,6 @@
 import data from "../../data.json";
 
-export type PageType = "store" | "checkout" | "payment-success";
+export type PageType = "store" | "checkout" | "success";
 
 export interface CartItem {
   id: number;
