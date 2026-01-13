@@ -8,8 +8,21 @@ export const Footer: React.FC = () => {
         <div className={classes.footerInner}>
           <p>&copy; 2025 Xendit, Inc.</p>
           <p className={classes.footerLinks}>
-            <a href="https://docs.xendit.co/apidocs">API Reference</a> ·{" "}
-            <a href="https://docs.xendit.co/docs/overview">Documentation</a>
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://docs.xendit.co/apidocs"
+            >
+              API Reference
+            </a>{" "}
+            ·{" "}
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://docs.xendit.co/docs/overview"
+            >
+              Documentation
+            </a>
           </p>
         </div>
       </Container>
