@@ -25,7 +25,7 @@ export const CheckoutPage: React.FC<{
       <Page>
         <Container>
           <Columns>
-            <WideColumn>
+            <Column>
               <button
                 className={classes.backToStoreButton}
                 onClick={() => goToPage("store")}
@@ -42,7 +42,7 @@ export const CheckoutPage: React.FC<{
                 }}
                 componentsKey={componentsKey}
               />
-            </WideColumn>
+            </Column>
             <Column>
               <div className={classes.orderSummaryBox}>
                 <div className={classes.orderSummary}>

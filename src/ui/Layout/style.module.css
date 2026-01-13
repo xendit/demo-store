@@ -13,6 +13,7 @@
 .columns {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 32px;
   width: 100%;
 }
@@ -36,6 +37,9 @@
   .container {
     width: 736px;
   }
+  .columns {
+    flex-direction: row;
+  }
 }
 
 @media screen and (min-width: 1024px) {
@@ -44,9 +48,6 @@
   }
   .container {
     width: 992px;
-  }
-  .columns {
-    flex-direction: row;
   }
 }
 
