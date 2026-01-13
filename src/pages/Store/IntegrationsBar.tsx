@@ -4,7 +4,7 @@ import ArrowSquareOut from "../../icons/ArrowSquareOut";
 import Caret from "../../icons/Caret";
 import Cart from "../../icons/Cart";
 import type { CartItem as CartItemType } from "../../types/store";
-import { ButtonLoadingSpinner } from "../../ui/Button/Button";
+import { Button, ButtonLoadingSpinner } from "../../ui/Button/Button";
 import classes from "./style.module.css";
 
 export const IntegrationsBar: React.FC<{
@@ -136,7 +136,7 @@ export const IntegrationsBar: React.FC<{
         </div>
 
         {!selectedFlow.omitsItems ? (
-          <button
+          <Button
             disabled={cart.length === 0 || checkingOut}
             title="Add items to your cart before checking out"
             className={classes.checkoutButton}
@@ -148,7 +148,7 @@ export const IntegrationsBar: React.FC<{
             <span className={classes.cartItemCount}>
               {cart.reduce((total, item) => total + item.quantity, 0)}
             </span>
-          </button>
+          </Button>
         ) : null}
       </div>
 

@@ -1,5 +1,5 @@
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   margin: 0;
   padding: 0;
   background-color: #ffffff;
@@ -45,7 +45,7 @@ button {
   border-radius: 8px;
   cursor: pointer;
   gap: 8px;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 }
 
 button:hover {
@@ -68,46 +68,4 @@ select {
   background: none;
   cursor: pointer;
   outline: none;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-.loading-spinner {
-  border: 8px solid #f3f3f3;
-  border-top: 8px solid #1762ee;
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  animation: spin 1s linear infinite;
-}
-
-.payment-success-message {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 32px;
-  font-weight: bold;
-  flex-direction: column;
-  gap: 32px;
-  width: 300px;
-  padding: 24px;
-  box-sizing: border-box;
-  margin: 64px auto;
-  border-radius: 16px;
-  background-image: url('/assets/background.svg');
-  background-size: 180px;
-  background-repeat: repeat-x;
-  box-shadow: 0px 0px 8px 2px #2525251a;
-}
-
-.payment-success-message h1 {
-  margin-bottom: 0;
-  font-size: 36px;
 }

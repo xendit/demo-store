@@ -1,16 +1,20 @@
-import type { FC, HTMLProps } from 'react';
-import classes from './style.module.css';
+import type { FC, HTMLProps } from "react";
+import classes from "./style.module.css";
 
 type Props = {
   children: React.ReactNode;
-  type?: 'button' | 'submit' | 'reset';
+  type?: "button" | "submit" | "reset";
 };
 
 export const Button: FC<HTMLProps<HTMLButtonElement> & Props> = (props) => {
-  const { children, type = 'button', ...rest } = props;
+  const { children, className, type = "button", ...rest } = props;
 
   return (
-    <button {...rest} className={classes.button} type={type}>
+    <button
+      {...rest}
+      className={`${classes.button} ${className ?? ""}`}
+      type={type}
+    >
       {children}
     </button>
   );

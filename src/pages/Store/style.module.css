@@ -3,7 +3,7 @@
   width: 100%;
   padding: 24px;
   box-shadow: 0px 0px 8px 2px #2525251a;
-  background-image: url('/assets/background.svg');
+  background-image: url("/assets/background.svg");
   background-size: 120px;
   background-repeat: repeat-x;
   border-radius: 12px;
@@ -193,10 +193,7 @@
 }
 
 .checkoutButton {
-  display: flex;
-  justify-content: center;
-  background-color: var(--background-primary);
-  color: white;
+  border-radius: 8px;
 }
 .checkoutButton:hover {
   background-color: var(--background-primary);

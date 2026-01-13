@@ -1,4 +1,5 @@
 .paymentContainer {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -41,4 +42,22 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loadingSpinner {
+  border: 8px solid #f3f3f3;
+  border-top: 8px solid #1762ee;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 1s linear infinite;
 }
