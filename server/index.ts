@@ -4,9 +4,9 @@ import https from "https";
 import fs from "fs";
 
 import config from "./config";
-import makeSessionForPaymentLink from "./payment-link";
-import makeSessionForComponents from "./components";
-import makeInvoice from "./invoice";
+import makeSessionForPaymentLink from "./integrations/payment-link";
+import makeSessionForComponents from "./integrations/components";
+import makeInvoice from "./integrations/invoice";
 
 const app = express();
 
