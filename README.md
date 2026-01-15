@@ -45,7 +45,7 @@ A comprehensive demo application showcasing Xendit's payment integrations across
 
 ## 💳 Integration Methods
 
-This demo showcases two primary Xendit integration approaches:
+This demo showcases two primary Xendit integration approaches using Payment Sessions:
 
 ### 1. Payment Link Integration
 
@@ -106,19 +106,18 @@ Explore different payment scenarios:
 
 ### Key Files
 
-- [`src/pages/Checkout/Payment.tsx`](src/pages/Checkout/Payment.tsx) - Frontend payment handling
+- [`src/integrations/XenditComponents.tsx`](src/integrations/XenditComponents.tsx) - Frontend payment handling
 - [`server/payment-link.ts`](server/payment-link.ts) - Payment Link integration logic
 - [`server/components.ts`](server/components.ts) - Components integration logic
 - [`server/config.ts`](server/config.ts) - Multi-currency API key configuration
 
 ## 🌟 Key Features Demonstrated
 
+- ✅ Payment using Xendit-hosted checkout or embedded components
 - ✅ Multi-market payment processing (6 SEA countries)
 - ✅ Currency conversion and localization
 - ✅ Payment method tokenization (save cards/accounts)
-- ✅ Real-time payment status updates
 - ✅ Mobile-responsive checkout experience
-- ✅ Error handling and user feedback
 - ✅ Development/production environment configuration
 
 ## 📖 Documentation
