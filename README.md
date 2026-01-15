@@ -109,7 +109,7 @@ Explore different payment scenarios:
 - [`src/pages/Checkout/Payment.tsx`](src/pages/Checkout/Payment.tsx) - Frontend payment handling
 - [`server/integrations/payment-link.ts`](server/integrations/payment-link.ts) - Payment Link integration logic
 - [`server/integrations/components.ts`](server/integrations/components.ts) - Components integration logic
-- [`server/integrations/config.ts`](server/integrations/config.ts) - Multi-currency API key configuration
+- [`server/config.ts`](server/config.ts) - Multi-currency API key configuration
 
 ## 🌟 Key Features Demonstrated
 
