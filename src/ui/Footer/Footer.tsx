@@ -6,7 +6,7 @@ export const Footer: React.FC = () => {
     <div className={classes.footer}>
       <Container>
         <div className={classes.footerInner}>
-          <p>&copy; 2025 Xendit, Inc.</p>
+          <p>&copy; 2026 Xendit, Inc.</p>
           <p className={classes.footerLinks}>
             <a
               target="_blank"
