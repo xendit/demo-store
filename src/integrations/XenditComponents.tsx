@@ -20,7 +20,7 @@ export const XenditComponentsPayment: React.FC<{
 
   useLayoutEffect(() => {
     const sdk = new Xendit.XenditComponents({
-      sessionClientKey: componentsKey,
+      componentsSdkKey: componentsKey,
     });
     sdkRef.current = sdk;
 

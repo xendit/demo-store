@@ -1,20 +1,53 @@
-import { IframeAppearanceOptions } from '../../shared/types';
-
 /**
  * @public
  * Channel properties for a payment method or payment token.
  */
-export declare type ChannelProperties = Record<string, ChannelProperty>;
-
-/**
- * @public
- */
-export declare type ChannelProperty = ChannelPropertyPrimative | ChannelPropertyPrimative[] | Record<string, ChannelPropertyPrimative>;
+export declare interface ChannelProperties {
+    [key: string]: ChannelPropertyPrimative | ChannelPropertyPrimative[] | ChannelProperties;
+}
 
 /**
  * @public
  */
 export declare type ChannelPropertyPrimative = string | number | boolean | undefined;
+
+/**
+ * @public
+ */
+export declare type IframeAppearanceOptions = {
+    /**
+     * Limited styles applied to iframe inputs.
+     */
+    inputStyles?: {
+        fontFamily?: string;
+        fontSize?: string;
+        fontWeight?: string;
+        lineHeight?: string;
+        letterSpacing?: string;
+        color?: string;
+        backgroundColor?: string;
+    };
+    /**
+     * Limited styles applied to iframe input placeholders.
+     */
+    placeholderStyles?: {
+        color?: string;
+    };
+    /**
+     * Custom font face to load within iframe fields.
+     * If you use this, you don't need to specify fontFamily or fontWeight.
+     */
+    fontFace?: {
+        /**
+         * CSS font-face source descriptor (e.g. `url(...) format(...)`)
+         */
+        source: string;
+        /**
+         * Font face options. Font family and weight are set automatically.
+         */
+        descriptors?: Pick<FontFaceDescriptors, "display" | "style" | "stretch">;
+    };
+};
 
 /**
  * @public
@@ -53,7 +86,7 @@ export declare class XenditComponents extends EventTarget {
      * ```
      * // initialize
      * const components = new XenditComponents({
-     *   sessionClientKey: "your-session-client-key",
+     *   componentsSdkKey: "your-session-client-key",
      * });
      * ```
      */
@@ -75,7 +108,7 @@ export declare class XenditComponents extends EventTarget {
      * The channels are organized in a way that is appropriate to show to users.
      * You can use this to render your channel picker UI.
      *
-     * Note it's possible for this list to be empty.
+     * You can pass `{filter: "CHANNEL_CODE"}` to filter channels by string or regexp.
      */
     getActiveChannelGroups(options?: XenditGetChannelsOptions): XenditPaymentChannelGroup[];
     /**
@@ -83,9 +116,9 @@ export declare class XenditComponents extends EventTarget {
      * Retrieve an unorganized list of payment channels available for this session.
      *
      * Use this when you need to search for specific channels. When rendering your UI,
-     * use `getActiveChannelGroups` instead.
+     * consider using `getActiveChannelGroups` if you support many channels.
      *
-     * Note it's possible for this list to be empty.
+     * You can pass `{filter: "CHANNEL_CODE"}` to filter channels by string or regexp.
      */
     getActiveChannels(options?: XenditGetChannelsOptions): XenditPaymentChannel[];
     /**
@@ -121,7 +154,7 @@ export declare class XenditComponents extends EventTarget {
      *
      * @example
      * ```
-     * const cardsChannel = components.getActiveChannels().find(ch => ch.channelCode === "CARDS");
+     * const cardsChannel = components.getActiveChannels({ filter: "CARDS" })[0];
      * const paymentComponent = components.createChannelComponent(cardsChannel);
      * document.querySelector(".payment-container").appendChild(paymentComponent);
      * ```
@@ -334,7 +367,7 @@ export declare class XenditComponents extends EventTarget {
  * Test version of XenditComponents that uses mock data instead of API calls.
  * Use this class for testing and development purposes.
  *
- * The sessionClientKey option is ignored.
+ * The componentsSdkKey option is ignored.
  *
  * @example
  * ```
@@ -344,10 +377,10 @@ export declare class XenditComponents extends EventTarget {
 export declare class XenditComponentsTest extends XenditComponents {
     /**
      * @public
-     * Test SDK ignores sessionClientKey and uses a mock key.
+     * Test SDK ignores componentsSdkKey and uses a mock key.
      */
-    constructor(options: Omit<XenditSdkOptions, "sessionClientKey"> & {
-        sessionClientKey?: string;
+    constructor(options: Omit<XenditSdkOptions, "componentsSdkKey"> & {
+        componentsSdkKey?: string;
     });
 }
 
@@ -406,9 +439,16 @@ export declare type XenditEventMap = {
  * Event fired when the SDK fails in an unrecoverable way.
  */
 export declare class XenditFatalErrorEvent extends Event {
+    /**
+     * A detailed error message for developers. Don't show this to users.
+     */
     message: string;
     static type: "fatal-error";
-    constructor(message: string);
+    constructor(
+    /**
+     * A detailed error message for developers. Don't show this to users.
+     */
+    message: string);
 }
 
 /**
@@ -416,6 +456,11 @@ export declare class XenditFatalErrorEvent extends Event {
  * Options for retrieving payment channels.
  */
 export declare interface XenditGetChannelsOptions {
+    /**
+     * Filter channels by their channel codes.
+     * (If using a RegExp, do not use the `g` flag.)
+     */
+    filter: string | string[] | RegExp;
     /**
      * If true, channels that do not satisfy the session's min/max amount will be filtered out.
      * Default true.
@@ -564,7 +609,7 @@ export declare interface XenditSdkOptions {
      * Your server should retrieve this from the Xendit API and pass it directly to the
      * client without saving or logging it anywhere.
      */
-    sessionClientKey: string;
+    componentsSdkKey: string;
     iframeFieldAppearance?: IframeAppearanceOptions;
 }
 
@@ -667,7 +712,7 @@ export declare interface XenditSession {
          */
         quantity: number;
         url?: string;
-        image_url?: string;
+        imageUrl?: string;
         category?: string;
         subcategory?: string;
         description?: string;
