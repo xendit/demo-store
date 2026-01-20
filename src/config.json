@@ -73,6 +73,21 @@
     },
     {
       "flow": "pay",
+      "integration": "components",
+      "url": "https://docs.xendit.co/docs/components-one-time-payment"
+    },
+    {
+      "flow": "save",
+      "integration": "components",
+      "url": "https://docs.xendit.co/docs/components-save-payment-method"
+    },
+    {
+      "flow": "pay_save",
+      "integration": "components",
+      "url": "https://docs.xendit.co/docs/pay-and-save-3"
+    },
+    {
+      "flow": "pay",
       "integration": "invoice",
       "url": "https://archive.docs.xendit.co/payment-link/single-payment-link"
     }
