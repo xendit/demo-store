@@ -37,7 +37,7 @@
     },
     {
       "value": "components",
-      "title": "Xendit Component",
+      "title": "Xendit Components",
       "description": "Use your own checkout page with our Payment Components.",
       "supportsFlows": [
         "pay",
