@@ -27,6 +27,9 @@ export const CheckoutPage: React.FC<{
 }) => {
   return (
     <div>
+      <div className={classes.checkoutBanner}>
+        <span>This is a sample checkout page, follow our example to embed <span className="componentOutline">Xendit Components</span> in your own checkout flow.</span>
+      </div>
       <Page>
         <Container>
           <Columns>
@@ -111,6 +114,21 @@ export const CheckoutPage: React.FC<{
             ) : null}
           </Columns>
         </Container>
+        <a
+          href="https://github.com/xendit/demo-store/blob/main/src/integrations/README.md"
+          className={classes.docsLinkBlock}
+          target="_blank"
+        >
+          <h3>Xendit Components</h3>
+          <ul>
+            <li>
+              Customise and style how this element will appear to match your
+              brand
+            </li>
+            <li>Secure customer's sensitive payment data</li>
+          </ul>
+          <p className={classes.docsLink}>Read integration guide</p>
+        </a>
       </Page>
     </div>
   );

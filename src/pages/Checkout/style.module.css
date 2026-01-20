@@ -1,3 +1,19 @@
+.checkoutBanner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #708397;
+  color: white;
+  padding: 8px;
+  font-size: 12px;
+}
+
+body:has(.checkoutBanner:hover) :global(.componentOutline) {
+  outline: 2px dashed var(--background-primary);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
 .checkoutTitle {
   font-size: 24px;
   line-height: 32px;
@@ -103,6 +119,50 @@
   font-size: 14px;
   line-height: 20px;
   text-align: center;
+}
+
+.docsLinkBlock {
+  width: fit-content;
+  margin: 48px auto;
+  color: var(--text-color);
+  background-color: var(--background-weak);
+  font-size: 12px;
+  text-decoration: none;
+  padding: 16px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 350px;
+  cursor: pointer;
+}
+
+body:has(.docsLinkBlock:hover) :global(.componentOutline) {
+  outline: 2px dashed var(--background-primary);
+  outline-offset: 8px;
+  border-radius: 4px;
+}
+
+.docsLinkBlock:hover {
+  filter: brightness(0.95);
+}
+
+.docsLinkBlock ul {
+  color: var(--text-light);
+  margin: 0;
+}
+
+.docsLinkBlock h3 {
+  font-size: 14px;
+}
+
+.docsLink {
+  color: var(--background-primary);
+  text-decoration: none;
+}
+
+.docsLinkBlock:hover .docsLink {
+  text-decoration: underline;
 }
 
 @media screen and (min-width: 768px) {
