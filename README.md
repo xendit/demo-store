@@ -2,6 +2,8 @@
 
 A comprehensive demo application showcasing Xendit's payment integrations across Southeast Asia. This full-stack React/Node.js application demonstrates how to implement Xendit's Sessions API with both Payment Link and Components integration methods.
 
+[Try the live demo 🚀](https://demo-store.xendit.co)
+
 ## Quick Start
 
 ### Prerequisites
@@ -125,9 +127,14 @@ Explore different payment scenarios:
 ### Sessions
 
 - [Payment Sessions Overview](https://docs.xendit.co/docs/payment-sessions-overview)
-- [Session for One-Time Payment](https://docs.xendit.co/docs/payment-1)
-- [Session for Saving Payment Method](https://docs.xendit.co/docs/storing-payment-details)
-- [Session for Pay and Save](https://docs.xendit.co/docs/pay-and-save-2)
+- Payment Session Payment Links
+  - [One-Time Payment](https://docs.xendit.co/docs/payment-1)
+  - [Saving Payment Method](https://docs.xendit.co/docs/storing-payment-details)
+  - [Pay and Save](https://docs.xendit.co/docs/pay-and-save-2)
+- Payment Session Components
+  - [One-Time Payment](https://docs.xendit.co/docs/components-one-time-payment)
+  - [Saving Payment Method](https://docs.xendit.co/docs/components-save-payment-method)
+  - [Pay and Save](https://docs.xendit.co/docs/pay-and-save-3)
 - [Create Session API](https://docs.xendit.co/apidocs/create-session)
 
 ### Further Reading
