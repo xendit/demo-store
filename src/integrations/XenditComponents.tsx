@@ -19,7 +19,7 @@ export const XenditComponentsPayment: React.FC<{
   const [submitting, setSubmitting] = useState(false);
 
   useLayoutEffect(() => {
-    const sdk = new XenditSdk.XenditComponents({
+    const sdk = new Xendit.XenditComponents({
       sessionClientKey: componentsKey,
     });
     sdkRef.current = sdk;

@@ -45,7 +45,7 @@ export const CheckoutPage: React.FC<{
               <XenditComponentsPayment
                 onSuccess={() => {
                   window.location.assign(
-                    `/?payment_status=success&flow=${selectedFlow.value}&integration=${selectedIntegration.value}`
+                    `/?payment_status=success&flow=${selectedFlow.value}&integration=${selectedIntegration.value}`,
                   );
                 }}
                 onFail={(message) => {
@@ -84,16 +84,16 @@ export const CheckoutPage: React.FC<{
                       <div className={classes.lineItem}>
                         <span className={classes.lineItemName}>Total</span>
                         <span className={classes.lineItemPrice}>
-                          {XenditSdk.XenditComponents.amountFormat(
+                          {Xendit.XenditComponents.amountFormat(
                             cart.reduce(
                               (total, item) =>
                                 total +
                                 PRODUCTS[item.id].price *
                                   EXCHANGE_RATES[selectedCurrency] *
                                   item.quantity,
-                              0
+                              0,
                             ),
-                            selectedCurrency
+                            selectedCurrency,
                           )}
                         </span>
                       </div>
@@ -131,7 +131,7 @@ const CartItem: React.FC<{ item: CartItemType; currency: string }> = ({
           : product.title}
       </span>
       <span className={classes.lineItemPrice}>
-        {XenditSdk.XenditComponents.amountFormat(subtotal, currency)}
+        {Xendit.XenditComponents.amountFormat(subtotal, currency)}
       </span>
     </div>
   );
