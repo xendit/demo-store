@@ -20,7 +20,7 @@ export const SuccessPage: React.FC = () => {
       return null;
     }
     const selectedIntegration = config.integrations.find(
-      (item) => item.value === integration
+      (item) => item.value === integration,
     );
     if (!selectedIntegration) {
       return null;
@@ -29,7 +29,7 @@ export const SuccessPage: React.FC = () => {
     const docsLink = config.docsLinks.find(
       (link) =>
         link.flow === selectedFlow.value &&
-        link.integration === selectedIntegration.value
+        link.integration === selectedIntegration.value,
     );
     return {
       flow: selectedFlow.title,
@@ -73,7 +73,12 @@ export const SuccessPage: React.FC = () => {
                   <strong>{docs.integration}</strong>
                 </p>
                 {docs.url ? (
-                  <a href={docs.url} className={classes.docsLink}>
+                  <a
+                    href={docs.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={classes.docsLink}
+                  >
                     See Docs <ArrowSquareOut />
                   </a>
                 ) : null}
