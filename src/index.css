@@ -1,3 +1,11 @@
+:root {
+  /* variables to style Xendit components */
+  --xendit-font-family: Inter, sans-serif;
+  --xendit-color-border: #e6e6eb;
+  --xendit-color-text: #252525;
+  --xendit-color-text-placeholder: #7d7d7d;
+}
+
 body {
   font-family: "Inter", sans-serif;
   margin: 0;
