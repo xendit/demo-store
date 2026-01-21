@@ -21,6 +21,22 @@ export const XenditComponentsPayment: React.FC<{
   useLayoutEffect(() => {
     const sdk = new Xendit.XenditComponents({
       componentsSdkKey: componentsKey,
+      iframeFieldAppearance: {
+        inputStyles: {
+          color: "#252525",
+          fontFamily: "Inter, sans-serif",
+        },
+        placeholderStyles: {
+          color: "#7d7d7d",
+        },
+        fontFace: {
+          source:
+            "url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900')",
+          descriptors: {
+            display: "swap",
+          },
+        },
+      },
     });
     sdkRef.current = sdk;
 
