@@ -1,3 +1,4 @@
+import { XenditComponents } from "xendit-components-web";
 import data from "../../../data.json";
 import config from "../../config.json";
 import ArrowLeft from "../../icons/ArrowLeft";
@@ -84,7 +85,7 @@ export const CheckoutPage: React.FC<{
                       <div className={classes.lineItem}>
                         <span className={classes.lineItemName}>Total</span>
                         <span className={classes.lineItemPrice}>
-                          {Xendit.XenditComponents.amountFormat(
+                          {XenditComponents.amountFormat(
                             cart.reduce(
                               (total, item) =>
                                 total +
@@ -131,7 +132,7 @@ const CartItem: React.FC<{ item: CartItemType; currency: string }> = ({
           : product.title}
       </span>
       <span className={classes.lineItemPrice}>
-        {Xendit.XenditComponents.amountFormat(subtotal, currency)}
+        {XenditComponents.amountFormat(subtotal, currency)}
       </span>
     </div>
   );

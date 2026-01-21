@@ -1,5 +1,6 @@
 import type { FC } from "react";
 import { useMemo } from "react";
+import { XenditComponents } from "xendit-components-web";
 import data from "../../../data.json";
 import type { Product } from "../../types/store";
 import classes from "./style.module.css";
@@ -93,7 +94,7 @@ const ProductItem: React.FC<{
         <p className={classes.productPrice}>
           {product.isSoldOut
             ? "Sold out!"
-            : Xendit.XenditComponents.amountFormat(price, currency)}
+            : XenditComponents.amountFormat(price, currency)}
         </p>
       </div>
     </button>
