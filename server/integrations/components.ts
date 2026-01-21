@@ -1,5 +1,5 @@
-import config from "./config";
-import database from "../data.json";
+import config from "../config";
+import database from "../../data.json";
 
 const POST_SESSION_URL = "https://api.xendit.co/sessions";
 
