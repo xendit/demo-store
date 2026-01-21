@@ -1,8 +1,5 @@
 import { useCallback, useLayoutEffect, useRef, useState } from "react";
-import type {
-  XenditComponents,
-  XenditFatalErrorEvent,
-} from "./xendit-components.js";
+import { XenditComponents, XenditFatalErrorEvent } from "xendit-components-web";
 import { Button } from "../ui/Button/Button.js";
 import classes from "./style.module.css";
 
@@ -19,8 +16,24 @@ export const XenditComponentsPayment: React.FC<{
   const [submitting, setSubmitting] = useState(false);
 
   useLayoutEffect(() => {
-    const sdk = new XenditSdk.XenditComponents({
-      sessionClientKey: componentsKey,
+    const sdk = new XenditComponents({
+      componentsSdkKey: componentsKey,
+      iframeFieldAppearance: {
+        inputStyles: {
+          color: "#252525",
+          fontFamily: "Inter, sans-serif",
+        },
+        placeholderStyles: {
+          color: "#7d7d7d",
+        },
+        fontFace: {
+          source:
+            "url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900')",
+          descriptors: {
+            display: "swap",
+          },
+        },
+      },
     });
     sdkRef.current = sdk;
 

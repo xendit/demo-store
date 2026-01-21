@@ -1,5 +1,6 @@
 import type { FC } from "react";
 import { useMemo } from "react";
+import { XenditComponents } from "xendit-components-web";
 import data from "../../../data.json";
 import type { Product } from "../../types/store";
 import classes from "./style.module.css";
@@ -59,7 +60,7 @@ const ProductItem: React.FC<{
       // eslint-disable-next-line react-hooks/purity
       Math.floor(Math.random() * 100),
     ],
-    []
+    [],
   );
 
   return (
@@ -93,7 +94,7 @@ const ProductItem: React.FC<{
         <p className={classes.productPrice}>
           {product.isSoldOut
             ? "Sold out!"
-            : XenditSdk.XenditComponents.amountFormat(price, currency)}
+            : XenditComponents.amountFormat(price, currency)}
         </p>
       </div>
     </button>
