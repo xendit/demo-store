@@ -100,12 +100,20 @@ export const XenditComponentsPayment: React.FC<{
 
   return (
     <div className={classes.paymentContainer}>
-      <div className={`${classes.xenditComponentContainer} componentOutline`} ref={el}></div>
-      <Button onClick={onSubmit} className={!ready ? classes.submitButtonDisabled : undefined}>
-        {flow === "save"
-          ? "Simulate Save Payment Method"
-          : "Simulate Pay Now"}
-      </Button>
+      <div
+        className={`${classes.xenditComponentContainer} componentOutline`}
+        ref={el}
+      ></div>
+      {!loading ? (
+        <Button
+          onClick={onSubmit}
+          className={!ready ? classes.submitButtonDisabled : undefined}
+        >
+          {flow === "save"
+            ? "Simulate Save Payment Method"
+            : "Simulate Pay Now"}
+        </Button>
+      ) : null}
       {loading || submitting ? (
         <div className={classes.loading}>
           <div className={classes.loadingSpinner}></div>
