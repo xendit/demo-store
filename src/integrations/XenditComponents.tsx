@@ -13,6 +13,7 @@ export const XenditComponentsPayment: React.FC<{
   const sdkRef = useRef<XenditComponents | null>(null);
 
   const [loading, setLoading] = useState(true);
+  const [ready, setReady] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
   useLayoutEffect(() => {
@@ -35,6 +36,7 @@ export const XenditComponentsPayment: React.FC<{
         },
       },
     });
+    (window as any).components = sdk;
     sdkRef.current = sdk;
 
     let cardsComponent: HTMLElement | null = null;
@@ -50,6 +52,12 @@ export const XenditComponentsPayment: React.FC<{
       }
     });
 
+    sdk.addEventListener("submission-ready", () => {
+      setReady(true);
+    });
+    sdk.addEventListener("submission-not-ready", () => {
+      setReady(false);
+    });
     sdk.addEventListener("submission-begin", () => {
       setSubmitting(true);
     });
@@ -93,9 +101,16 @@ export const XenditComponentsPayment: React.FC<{
   return (
     <div className={classes.paymentContainer}>
       <div className={classes.xenditComponentContainer} ref={el}></div>
-      <Button onClick={onSubmit}>
-        {flow === "save" ? "Simulate Save Payment Method" : "Simulate Pay Now"}
-      </Button>
+      {!loading ? (
+        <Button
+          onClick={onSubmit}
+          className={!ready ? classes.submitButtonDisabled : undefined}
+        >
+          {flow === "save"
+            ? "Simulate Save Payment Method"
+            : "Simulate Pay Now"}
+        </Button>
+      ) : null}
       {loading || submitting ? (
         <div className={classes.loading}>
           <div className={classes.loadingSpinner}></div>

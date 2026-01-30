@@ -1,3 +1,16 @@
+.checkoutBanner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #708397;
+  color: white;
+  padding: 8px;
+  font-size: 12px;
+  cursor: pointer;
+  z-index: 3;
+  text-align: center;
+}
+
 .checkoutTitle {
   font-size: 24px;
   line-height: 32px;
@@ -105,9 +118,79 @@
   text-align: center;
 }
 
+.relative {
+  position: relative;
+}
+
+.docsLinkBackdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0);
+  opacity: 0;
+  z-index: 2;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.docsLinkBlock {
+  width: 100%;
+  color: var(--text-color);
+  background-color: rgba(255, 255, 255, 0.9);
+  font-size: 14px;
+  text-decoration: none;
+  padding: 16px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 350px;
+  cursor: pointer;
+  position: absolute;
+  height: fit-content;
+  backdrop-filter: blur(2px);
+  z-index: 3;
+  top: calc(100% - 32px);
+  justify-self: center;
+}
+
+.docsLinkBlock hr {
+  border: none;
+  border-top: 1px solid var(--border-color);
+  margin: 0;
+}
+
+.docsLinkBlock:hover {
+  filter: brightness(0.95);
+}
+
+.docsLinkBlock ul {
+  color: var(--text-light);
+  margin: 0;
+}
+
+.docsLinkBlock h3 {
+  font-size: 14px;
+}
+
+.docsLink {
+  color: var(--background-primary);
+  text-decoration: none;
+}
+
+.docsLinkBlock:hover .docsLink {
+  text-decoration: underline;
+}
+
 @media screen and (min-width: 768px) {
   .orderSummaryBox {
     display: flex;
+  }
+  .docsLinkBlock {
+    top: unset;
+    left: calc(100% + 32px);
   }
 }
 

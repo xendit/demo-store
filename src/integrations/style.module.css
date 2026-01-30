@@ -4,19 +4,12 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 32px;
+  width: fit-content;
+  margin: 0 auto;
 }
 
-.submit {
-  margin-top: 32px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  border: 1px solid #1762ee;
-  background-color: #1762ee;
-  color: white;
-  padding: 12px 18px;
-  border-radius: 100px;
-  font-weight: bold;
+.submitButtonDisabled {
+  filter: grayscale(100%) opacity(30%);
 }
 
 .submit:hover {
@@ -29,11 +22,18 @@
 }
 
 .xenditComponentContainer {
+  background: var(--background-color);
+  padding: 16px;
+  border-radius: 8px;
+  margin: -16px;
+  box-sizing: border-box;
   width: 350px;
+  outline: rgba(255,255,255,0.2) solid 4px;
+  z-index: 3;
 }
 
 .loading {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -60,4 +60,8 @@
   width: 60px;
   height: 60px;
   animation: spin 1s linear infinite;
+}
+
+:global(.xendit-dialog-backdrop) {
+  z-index: 5;
 }
