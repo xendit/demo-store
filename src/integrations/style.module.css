@@ -22,7 +22,14 @@
 }
 
 .xenditComponentContainer {
+  background: var(--background-color);
+  padding: 16px;
+  border-radius: 8px;
+  margin: -16px;
+  box-sizing: border-box;
   width: 350px;
+  outline: rgba(255,255,255,0.2) solid 4px;
+  z-index: 3;
 }
 
 .loading {
@@ -53,4 +60,8 @@
   width: 60px;
   height: 60px;
   animation: spin 1s linear infinite;
+}
+
+:global(.xendit-dialog-backdrop) {
+  z-index: 5;
 }

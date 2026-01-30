@@ -6,6 +6,7 @@ import { XenditComponentsPayment } from "../../integrations/XenditComponents";
 import type { CartItem as CartItemType, PageType } from "../../types/store";
 import { Column, Columns, Container, Page } from "../../ui/Layout/Layout";
 import classes from "./style.module.css";
+import { useState } from "react";
 
 const PRODUCTS = data.products;
 const EXCHANGE_RATES = data.exchangeRates as Record<string, number>;
@@ -25,40 +26,76 @@ export const CheckoutPage: React.FC<{
   selectedIntegration,
   componentsKey,
 }) => {
+  const [showOverlay, setShowOverlay] = useState(false);
+  const toggleOverlay = () => {
+    setShowOverlay(!showOverlay);
+  };
+
   return (
     <div>
-      <div className={classes.checkoutBanner}>
-        <span>This is a sample checkout page, follow our example to embed <span className="componentOutline">Xendit Components</span> in your own checkout flow.</span>
+      <div className={classes.checkoutBanner} onClick={toggleOverlay}>
+        <span>
+          This is a sample checkout page, follow our example to embed Xendit
+          Components in your own checkout flow.
+        </span>
       </div>
       <Page>
         <Container>
           <Columns>
             <Column>
-              <button
-                className={classes.backToStoreButton}
-                onClick={() => goToPage("store")}
-              >
-                <ArrowLeft width={16} height={16} />
-                Back
-              </button>
-              <h1 className={classes.checkoutTitle}>
-                {selectedFlow.value === "save"
-                  ? "Add Payment Method"
-                  : "Complete Your Payment"}
-              </h1>
-              <XenditComponentsPayment
-                onSuccess={() => {
-                  window.location.assign(
-                    `/?payment_status=success&flow=${selectedFlow.value}&integration=${selectedIntegration.value}`,
-                  );
-                }}
-                onFail={(message) => {
-                  alert(`Error: ${message}`);
-                  goToPage("store");
-                }}
-                componentsKey={componentsKey}
-                flow={selectedFlow.value}
+              <div
+                className={classes.docsLinkBackdrop}
+                onClick={toggleOverlay}
+                role="button"
+                style={
+                  showOverlay ? { opacity: 0.5 } : { pointerEvents: "none" }
+                }
               />
+              <div className={classes.relative}>
+                <button
+                  className={classes.backToStoreButton}
+                  onClick={() => goToPage("store")}
+                >
+                  <ArrowLeft width={16} height={16} />
+                  Back
+                </button>
+                <h1 className={classes.checkoutTitle}>
+                  {selectedFlow.value === "save"
+                    ? "Add Payment Method"
+                    : "Complete Your Payment"}
+                </h1>
+                {showOverlay ? (
+                  <a
+                    href="https://github.com/xendit/demo-store/blob/main/src/integrations/README.md"
+                    className={classes.docsLinkBlock}
+                    target="_blank"
+                  >
+                    <h3>Xendit Components</h3>
+                    <hr />
+                    <ul>
+                      <li>
+                        Customise and style how this element will appear to
+                        match your brand
+                      </li>
+                      <li>Secure customer's sensitive payment data</li>
+                    </ul>
+                    <p className={classes.docsLink}>Read integration guide</p>
+                  </a>
+                ) : null}
+                <XenditComponentsPayment
+                  onSuccess={() => {
+                    window.location.assign(
+                      `/?payment_status=success&flow=${selectedFlow.value}&integration=${selectedIntegration.value}`
+                    );
+                  }}
+                  onFail={(message) => {
+                    alert(`Error: ${message}`);
+                    goToPage("store");
+                  }}
+                  componentsKey={componentsKey}
+                  flow={selectedFlow.value}
+                />
+              </div>
             </Column>
             {selectedFlow.value !== "save" ? (
               <Column>
@@ -95,9 +132,9 @@ export const CheckoutPage: React.FC<{
                                 PRODUCTS[item.id].price *
                                   EXCHANGE_RATES[selectedCurrency] *
                                   item.quantity,
-                              0,
+                              0
                             ),
-                            selectedCurrency,
+                            selectedCurrency
                           )}
                         </span>
                       </div>
@@ -114,21 +151,6 @@ export const CheckoutPage: React.FC<{
             ) : null}
           </Columns>
         </Container>
-        <a
-          href="https://github.com/xendit/demo-store/blob/main/src/integrations/README.md"
-          className={classes.docsLinkBlock}
-          target="_blank"
-        >
-          <h3>Xendit Components</h3>
-          <ul>
-            <li>
-              Customise and style how this element will appear to match your
-              brand
-            </li>
-            <li>Secure customer's sensitive payment data</li>
-          </ul>
-          <p className={classes.docsLink}>Read integration guide</p>
-        </a>
       </Page>
     </div>
   );

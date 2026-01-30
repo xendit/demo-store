@@ -100,10 +100,7 @@ export const XenditComponentsPayment: React.FC<{
 
   return (
     <div className={classes.paymentContainer}>
-      <div
-        className={`${classes.xenditComponentContainer} componentOutline`}
-        ref={el}
-      ></div>
+      <div className={classes.xenditComponentContainer} ref={el}></div>
       {!loading ? (
         <Button
           onClick={onSubmit}

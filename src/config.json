@@ -28,31 +28,19 @@
       "value": "session",
       "title": "Sessions - Payment Link",
       "description": "Use Xendit’s Checkout. Fastest and least effort to integrate.",
-      "supportsFlows": [
-        "pay",
-        "save",
-        "pay_save",
-        "subscriptions"
-      ]
+      "supportsFlows": ["pay", "save", "pay_save", "subscriptions"]
     },
     {
       "value": "components",
-      "title": "Xendit Components",
+      "title": "Sessions - Xendit Components",
       "description": "Use your own checkout page with our Payment Components.",
-      "supportsFlows": [
-        "pay",
-        "save",
-        "pay_save",
-        "subscriptions"
-      ]
+      "supportsFlows": ["pay", "save", "pay_save", "subscriptions"]
     },
     {
       "value": "invoice",
       "title": "Payment Link (Legacy)",
       "description": "Our old checkout page. We don't recommend using this for new integrations.",
-      "supportsFlows": [
-        "pay"
-      ]
+      "supportsFlows": ["pay"]
     }
   ],
   "docsLinks": [
