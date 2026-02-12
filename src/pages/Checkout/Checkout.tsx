@@ -1,12 +1,14 @@
+import { useState } from "react";
 import { XenditComponents } from "xendit-components-web";
 import data from "../../../data.json";
 import config from "../../config.json";
 import ArrowLeft from "../../icons/ArrowLeft";
+import Eye from "../../icons/Eye";
+import EyeSlash from "../../icons/EyeSlash";
 import { XenditComponentsPayment } from "../../integrations/XenditComponents";
 import type { CartItem as CartItemType, PageType } from "../../types/store";
 import { Column, Columns, Container, Page } from "../../ui/Layout/Layout";
 import classes from "./style.module.css";
-import { useState } from "react";
 
 const PRODUCTS = data.products;
 const EXCHANGE_RATES = data.exchangeRates as Record<string, number>;
@@ -33,11 +35,19 @@ export const CheckoutPage: React.FC<{
 
   return (
     <div>
-      <div className={classes.checkoutBanner} onClick={toggleOverlay}>
-        <span>
-          This is a sample checkout page, follow our example to embed Xendit
-          Components in your own checkout flow.
-        </span>
+      <div className={classes.checkoutBanner}>
+        <span>This is a sample checkout page for visualization only.</span>
+        <div className={classes.showBoundsToggle} onClick={toggleOverlay}>
+          {showOverlay ? (
+            <>
+              <EyeSlash /> Hide Component Bounds
+            </>
+          ) : (
+            <>
+              <Eye /> Show Component Bounds
+            </>
+          )}
+        </div>
       </div>
       <Page>
         <Container>
@@ -85,7 +95,7 @@ export const CheckoutPage: React.FC<{
                 <XenditComponentsPayment
                   onSuccess={() => {
                     window.location.assign(
-                      `/?payment_status=success&flow=${selectedFlow.value}&integration=${selectedIntegration.value}`
+                      `/?payment_status=success&flow=${selectedFlow.value}&integration=${selectedIntegration.value}`,
                     );
                   }}
                   onFail={(message) => {
@@ -132,9 +142,9 @@ export const CheckoutPage: React.FC<{
                                 PRODUCTS[item.id].price *
                                   EXCHANGE_RATES[selectedCurrency] *
                                   item.quantity,
-                              0
+                              0,
                             ),
-                            selectedCurrency
+                            selectedCurrency,
                           )}
                         </span>
                       </div>
