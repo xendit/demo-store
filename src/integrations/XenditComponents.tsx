@@ -61,7 +61,15 @@ export const XenditComponentsPayment: React.FC<{
     sdk.addEventListener("submission-begin", () => {
       setSubmitting(true);
     });
-    sdk.addEventListener("submission-end", () => {
+    sdk.addEventListener("submission-end", (event) => {
+      setSubmitting(false);
+
+      const { userErrorMessage } = event;
+      if (userErrorMessage) {
+        alert(userErrorMessage.join("\n"));
+      }
+    });
+    sdk.addEventListener("action-end", () => {
       setSubmitting(false);
     });
 
