@@ -39,17 +39,11 @@ export const XenditComponentsPayment: React.FC<{
     (window as any).components = sdk;
     sdkRef.current = sdk;
 
-    let cardsComponent: HTMLElement | null = null;
+    const channelPicker = sdk.createChannelPickerComponent();
+    el.current?.replaceChildren(channelPicker);
 
     sdk.addEventListener("init", () => {
       setLoading(false);
-      const cards = sdk
-        .getActiveChannels()
-        .find((channel) => channel.channelCode === "CARDS");
-      if (cards) {
-        cardsComponent = sdk.createChannelComponent(cards);
-        el.current?.replaceChildren(cardsComponent);
-      }
     });
 
     sdk.addEventListener("submission-ready", () => {
@@ -74,9 +68,7 @@ export const XenditComponentsPayment: React.FC<{
     });
 
     return () => {
-      if (cardsComponent) {
-        sdkRef.current?.destroyComponent(cardsComponent);
-      }
+      sdkRef.current?.destroyComponent(channelPicker);
     };
   }, [componentsKey]);
 
@@ -108,7 +100,10 @@ export const XenditComponentsPayment: React.FC<{
 
   return (
     <div className={classes.paymentContainer}>
-      <div className={classes.xenditComponentContainer} ref={el}></div>
+      <div
+        className={`${classes.xenditComponentContainer} ${loading || submitting ? classes.xenditComponentContainerDisabled : ""}`}
+        ref={el}
+      ></div>
       {!loading ? (
         <Button
           onClick={onSubmit}
