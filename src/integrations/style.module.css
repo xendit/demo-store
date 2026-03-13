@@ -27,9 +27,15 @@
   border-radius: 8px;
   margin: -16px;
   box-sizing: border-box;
-  width: 350px;
-  outline: rgba(255,255,255,0.2) solid 4px;
+  width: 440px;
+  max-width: calc(100vw - 32px);
+  outline: rgba(255, 255, 255, 0.2) solid 4px;
   z-index: 3;
+}
+
+.xenditComponentContainerDisabled {
+  pointer-events: none;
+  filter: grayscale(100%) opacity(50%);
 }
 
 .loading {

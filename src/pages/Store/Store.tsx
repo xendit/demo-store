@@ -31,7 +31,7 @@ export const StorePage: React.FC<{
   onChangeFlow: (flow: (typeof config.flows)[number]) => void;
   selectedIntegration: (typeof config.integrations)[number];
   onChangeIntegration: (
-    integration: (typeof config.integrations)[number]
+    integration: (typeof config.integrations)[number],
   ) => void;
   cart: CartItemType[];
   onAddToCart: (productId: number) => void;
@@ -109,7 +109,7 @@ export const StorePage: React.FC<{
         setToasts((prevToasts) => prevToasts.slice(1));
       }, 5000);
     },
-    [onAddToCart, checkingOut, selectedFlow]
+    [onAddToCart, checkingOut, selectedFlow],
   );
 
   const featuredProductsSectionClasses = [
