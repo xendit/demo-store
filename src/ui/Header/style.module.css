@@ -15,6 +15,7 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  padding: 0 16px;
 }
 
 .headerLogo {
@@ -63,6 +64,11 @@
   background-color: var(--background-weak);
 }
 
+@media screen and (min-width: 480px) {
+  .headerInner {
+    padding: 0;
+  }
+}
 @media screen and (min-width: 768px) {
   .selectedCurrencyCountry {
     display: inline;
