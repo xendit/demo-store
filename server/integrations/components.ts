@@ -67,8 +67,6 @@ const makeSessionForComponents = async (
     },
   };
 
-  console.log(payload);
-
   const response = await fetch(POST_SESSION_URL, {
     method: "POST",
     headers: {
