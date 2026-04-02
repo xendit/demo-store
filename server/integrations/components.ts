@@ -8,7 +8,7 @@ const POST_SESSION_URL = "https://api.xendit.co/sessions";
  */
 const makeSessionForComponents = async (
   data: PostCheckoutPayload,
-  apiKey: string
+  apiKey: string,
 ): Promise<ComponentsSession> => {
   const items = [];
   let amount = 0;
@@ -16,7 +16,7 @@ const makeSessionForComponents = async (
   if (data.flow !== "save") {
     for (const item of data.cart) {
       const product = database.products.find(
-        (product) => product.id === item.id
+        (product) => product.id === item.id,
       );
       if (product) {
         const priceInCurrency =
@@ -63,7 +63,7 @@ const makeSessionForComponents = async (
     // origins should match where the components will be rendered
     mode: "COMPONENTS",
     components_configuration: {
-      origins: [config.origin],
+      origins: config.origins,
     },
   };
 
@@ -81,7 +81,7 @@ const makeSessionForComponents = async (
     throw new Error(
       `Failed to create session: ${response.status} ${
         response.statusText
-      } - ${JSON.stringify(errorData)}`
+      } - ${JSON.stringify(errorData)}`,
     );
   }
 

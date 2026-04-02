@@ -1,11 +1,14 @@
 type Config = {
   apiKeyByCurrency: { [currency: string]: string | undefined };
   countryByCurrency: { [currency: string]: string };
-  origin: string;
+  origins: string[];
   successUrl: string;
 };
 
 const appUrl = process.env.APP_URL || "http://localhost:5173";
+const componentOrigins = process.env.COMPONENT_ORIGINS
+  ? process.env.COMPONENT_ORIGINS.split(",").map((origin) => origin.trim())
+  : [appUrl];
 
 const config: Config = {
   apiKeyByCurrency: {
@@ -24,7 +27,7 @@ const config: Config = {
     VND: "VN",
     SGD: "SG",
   },
-  origin: appUrl,
+  origins: componentOrigins,
   successUrl: appUrl + "?payment_status=success",
 };
 
