@@ -3,7 +3,7 @@
     {
       "value": "pay",
       "title": "Pay",
-      "description": "To allow customer do an one-time payment"
+      "description": "To allow customer do a one-time payment"
     },
     {
       "value": "save",
@@ -17,10 +17,9 @@
       "description": "Do a payment along with saving customer’s payment method. For this example, saving is OPTIONAL."
     },
     {
-      "value": "subscriptions",
-      "title": "Subscriptions (soon)",
-      "description": "Do a recurring charge to your customers",
-      "disabled": true
+      "value": "subscription",
+      "title": "Subscription",
+      "description": "To make recurring charges to your customers"
     }
   ],
   "integrations": [
@@ -28,13 +27,13 @@
       "value": "session",
       "title": "Sessions - Payment Link",
       "description": "Use Xendit’s Checkout. Fastest and least effort to integrate.",
-      "supportsFlows": ["pay", "save", "pay_save", "subscriptions"]
+      "supportsFlows": ["pay", "save", "pay_save", "subscription"]
     },
     {
       "value": "components",
       "title": "Sessions - Xendit Components",
       "description": "Use your own checkout page with our Payment Components.",
-      "supportsFlows": ["pay", "save", "pay_save", "subscriptions"]
+      "supportsFlows": ["pay", "save", "pay_save", "subscription"]
     },
     {
       "value": "invoice",

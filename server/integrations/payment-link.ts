@@ -8,7 +8,7 @@ const POST_SESSION_URL = "https://api.xendit.co/sessions";
  */
 const makeSessionForPaymentLink = async (
   data: PostCheckoutPayload,
-  apiKey: string
+  apiKey: string,
 ): Promise<PaymentLinkSession> => {
   const items = [];
   let amount = 0;
@@ -16,7 +16,7 @@ const makeSessionForPaymentLink = async (
   if (data.flow !== "save") {
     for (const item of data.cart) {
       const product = database.products.find(
-        (product) => product.id === item.id
+        (product) => product.id === item.id,
       );
       if (product) {
         const priceInCurrency =
@@ -39,8 +39,18 @@ const makeSessionForPaymentLink = async (
   }
 
   const now = new Date();
+
+  const expiresAt = new Date(now.getTime() + 60 * 60 * 1000).toISOString();
+
+  const flowToSessionType = {
+    pay: "PAY",
+    pay_save: "PAY",
+    save: "SAVE",
+    subscription: "SUBSCRIPTION",
+  };
+
   const successReturnUrl = config.successUrl.match(
-    /^(https:\/\/)([a-zA-Z0-9.-]+\.[a-zA-Z0-9-]+)(\/[^\s#]*)?(\?[^\s#]*)?(#\S*)?$/i
+    /^(https:\/\/)([a-zA-Z0-9.-]+\.[a-zA-Z0-9-]+)(\/[^\s#]*)?(\?[^\s#]*)?(#\S*)?$/i,
   )
     ? new URL(config.successUrl)
     : undefined;
@@ -50,6 +60,7 @@ const makeSessionForPaymentLink = async (
 
   const payload = {
     reference_id: `checkout-demo-${now.getTime()}`,
+    expires_at: expiresAt,
     customer: {
       type: "INDIVIDUAL",
       reference_id: `demo-customer-${now.getTime()}`,
@@ -59,7 +70,17 @@ const makeSessionForPaymentLink = async (
         surname: "Demo",
       },
     },
-    session_type: data.flow === "save" ? "SAVE" : "PAY",
+    session_type: flowToSessionType[data.flow],
+    subscription:
+      data.flow === "subscription"
+        ? {
+            schedule: {
+              anchor_date: expiresAt,
+              interval: "MONTH",
+              interval_count: 1,
+            },
+          }
+        : undefined,
     allow_save_payment_method:
       data.flow === "pay_save" ? "OPTIONAL" : "DISABLED",
     currency: data.currency,
@@ -85,7 +106,7 @@ const makeSessionForPaymentLink = async (
   if (!response.ok) {
     const errorData = (await response.json()) as { message: string };
     throw new Error(
-      `Failed to create session payment link: ${errorData.message}`
+      `Failed to create session payment link: ${errorData.message}`,
     );
   }
 
