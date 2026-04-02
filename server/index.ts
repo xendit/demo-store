@@ -10,6 +10,13 @@ import makeInvoice from "./integrations/invoice";
 
 const app = express();
 
+app.use((req, res, next) => {
+  if (req.hostname === 'demo.xendit.co') {
+    return res.redirect(301, 'https://demo-store.xendit.co' + req.originalUrl);
+  }
+  next();
+});
+
 app.use(express.static(path.join(__dirname, "static")));
 
 app.use(express.json());
