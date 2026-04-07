@@ -19,7 +19,8 @@
     {
       "value": "subscription",
       "title": "Subscription",
-      "description": "To make recurring charges to your customers"
+      "description": "To make recurring charges to your customers",
+      "disabled": true
     }
   ],
   "integrations": [
