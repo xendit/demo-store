@@ -39,8 +39,18 @@ const makeSessionForComponents = async (
   }
 
   const now = new Date();
+  const expiresAt = new Date(now.getTime() + 60 * 60 * 1000).toISOString();
+
+  const flowToSessionType = {
+    pay: "PAY",
+    pay_save: "PAY",
+    save: "SAVE",
+    subscription: "SUBSCRIPTION",
+  };
+
   const payload = {
     reference_id: `checkout-demo-${now.getTime()}`,
+    expires_at: expiresAt,
     customer: {
       type: "INDIVIDUAL",
       reference_id: `demo-customer-${now.getTime()}`,
@@ -50,7 +60,17 @@ const makeSessionForComponents = async (
         surname: "Demo",
       },
     },
-    session_type: data.flow === "save" ? "SAVE" : "PAY",
+    session_type: flowToSessionType[data.flow],
+    subscription:
+      data.flow === "subscription"
+        ? {
+            schedule: {
+              anchor_date: expiresAt,
+              interval: "MONTH",
+              interval_count: 1,
+            },
+          }
+        : undefined,
     allow_save_payment_method:
       data.flow === "pay_save" ? "OPTIONAL" : "DISABLED",
     currency: data.currency,

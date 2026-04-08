@@ -10,14 +10,15 @@
     "build": "vite build && tsc -b tsconfig.server.json",
     "lint": "eslint .",
     "preview": "vite preview",
-    "start": "node -r dotenv/config dist/index.js"
+    "start": "node -r dotenv/config dist/index.js",
+    "tsc": "tsc"
   },
   "dependencies": {
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "xendit-components-web": "^0.0.18"
+    "xendit-components-web": "^0.0.21"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",

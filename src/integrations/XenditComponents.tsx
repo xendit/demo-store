@@ -63,9 +63,6 @@ export const XenditComponentsPayment: React.FC<{
         alert(userErrorMessage.join("\n"));
       }
     });
-    sdk.addEventListener("action-end", () => {
-      setSubmitting(false);
-    });
 
     return () => {
       sdkRef.current?.destroyComponent(channelPicker);
@@ -111,7 +108,7 @@ export const XenditComponentsPayment: React.FC<{
         >
           {flow === "save"
             ? "Simulate Save Payment Method"
-            : "Simulate Pay Now"}
+            : "Simulate Payment"}
         </Button>
       ) : null}
       {loading || submitting ? (
