@@ -1,6 +1,6 @@
 import data from "../../data.json";
 
-export type PageType = "store" | "checkout" | "success";
+export type PageType = "store" | "checkout" | "checkout-iframe" | "success";
 
 export interface CartItem {
   id: number;

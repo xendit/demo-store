@@ -22,6 +22,8 @@ import { Toasts } from "../../ui/Toasts/Toasts";
 import { IntegrationsBar } from "./IntegrationsBar";
 import classes from "./style.module.css";
 
+const queryString = new URLSearchParams(window.location.search);
+
 const PRODUCTS: Product[] = data.products;
 
 export const StorePage: React.FC<{
@@ -78,10 +80,12 @@ export const StorePage: React.FC<{
       setCheckingOut(false);
       const data = await response.json();
       if (data.checkout_url) {
-        window.location.assign(data.checkout_url);
-        return;
-      }
-      if (data.components_sdk_key) {
+        if (queryString.has("payment-link-iframe")) {
+          goToPage("checkout-iframe", { paymentLinkUrl: data.checkout_url });
+        } else {
+          window.location.assign(data.checkout_url);
+        }
+      } else if (data.components_sdk_key) {
         goToPage("checkout", { componentsKey: data.components_sdk_key });
       }
     } catch (error) {
