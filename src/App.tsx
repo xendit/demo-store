@@ -5,6 +5,7 @@ import { CheckoutPage } from "./pages/Checkout/Checkout";
 import { SuccessPage } from "./pages/Success/Success";
 import { StorePage } from "./pages/Store/Store";
 import type { CartItem, PageType } from "./types/store";
+import { CheckoutIframePage } from "./pages/CheckoutIframe/CheckoutIframe";
 
 const App: React.FC = () => {
   const queryParams = new URLSearchParams(window.location.search);
@@ -16,13 +17,13 @@ const App: React.FC = () => {
   }>(
     paymentStatus === "success"
       ? { page: "success", params: {} }
-      : { page: "store", params: {} }
+      : { page: "store", params: {} },
   );
 
   const [selectedCurrency, setSelectedCurrency] = useState<string>("IDR");
   const [selectedFlow, setSelectedFlow] = useState(config.flows[0]);
   const [selectedIntegration, setSelectedIntegration] = useState(
-    config.integrations[0]
+    config.integrations[0],
   );
 
   const [cart, setCart] = useState<CartItem[]>([
@@ -33,7 +34,7 @@ const App: React.FC = () => {
     setCart((prev) => {
       const clone = [...prev];
       const existingItemIndex = clone.findIndex(
-        (item) => item.id === productId
+        (item) => item.id === productId,
       );
       if (existingItemIndex >= 0) {
         clone[existingItemIndex].quantity += 1;
@@ -48,7 +49,7 @@ const App: React.FC = () => {
     (page: PageType, params: Record<string, unknown> = {}) => {
       setCurrentPage({ page, params });
     },
-    []
+    [],
   );
 
   switch (currentPage.page) {
@@ -75,6 +76,14 @@ const App: React.FC = () => {
           selectedFlow={selectedFlow}
           selectedIntegration={selectedIntegration}
           componentsKey={currentPage.params.componentsKey as string}
+        />
+      );
+    case "checkout-iframe":
+      return (
+        <CheckoutIframePage
+          goToPage={goToPage}
+          selectedFlow={selectedFlow}
+          paymentLinkUrl={currentPage.params.paymentLinkUrl as string}
         />
       );
     case "success":
