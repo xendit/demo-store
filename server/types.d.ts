@@ -1,4 +1,4 @@
-type Currency = "IDR" | "PHP" | "THB" | "SGD" | "VND";
+type Currency = "IDR" | "PHP" | "THB" | "SGD" | "VND" | "HKD";
 
 type PostCheckoutPayload = {
   flow: "pay" | "save" | "pay_save" | "subscription";
