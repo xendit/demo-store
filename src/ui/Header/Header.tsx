@@ -12,6 +12,7 @@ const CURRENCY_LABELS: {
   THB: { symbol: "THB ฿", country: "Thailand" },
   SGD: { symbol: "SGD $", country: "Singapore" },
   VND: { symbol: "VND ₫", country: "Vietnam" },
+  HKD: { symbol: "HKD $", country: "Hong Kong" },
 };
 
 export const Header: React.FC<{

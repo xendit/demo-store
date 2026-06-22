@@ -18,6 +18,7 @@ const config: Config = {
     THB: process.env.THB_API_KEY,
     VND: process.env.VND_API_KEY,
     SGD: process.env.SGD_API_KEY,
+    HKD: process.env.HKD_API_KEY,
   },
   countryByCurrency: {
     IDR: "ID",
@@ -26,6 +27,7 @@ const config: Config = {
     THB: "TH",
     VND: "VN",
     SGD: "SG",
+    HKD: "HK",
   },
   origins: componentOrigins,
   successUrl: appUrl + "?payment_status=success",
