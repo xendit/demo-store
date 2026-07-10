@@ -10,6 +10,9 @@ import { CheckoutIframePage } from "./pages/CheckoutIframe/CheckoutIframe";
 const App: React.FC = () => {
   const queryParams = new URLSearchParams(window.location.search);
   const paymentStatus = queryParams.get("payment_status");
+  const tokenRequestId = queryParams.get("token_request_id");
+  const checkoutId = queryParams.get("checkout_id");
+  const isReturn = !!(tokenRequestId && checkoutId);
 
   const [currentPage, setCurrentPage] = useState<{
     page: PageType;
@@ -17,7 +20,9 @@ const App: React.FC = () => {
   }>(
     paymentStatus === "success"
       ? { page: "success", params: {} }
-      : { page: "store", params: {} },
+      : isReturn
+        ? { page: "checkout", params: { checkoutId, resume: true } }
+        : { page: "store", params: {} },
   );
 
   const [selectedCurrency, setSelectedCurrency] = useState<string>("IDR");
@@ -47,6 +52,9 @@ const App: React.FC = () => {
 
   const goToPage = useCallback(
     (page: PageType, params: Record<string, unknown> = {}) => {
+      if (page === "store" && window.location.search) {
+        window.history.replaceState(null, "", window.location.pathname);
+      }
       setCurrentPage({ page, params });
     },
     [],
@@ -75,7 +83,9 @@ const App: React.FC = () => {
           selectedCurrency={selectedCurrency}
           selectedFlow={selectedFlow}
           selectedIntegration={selectedIntegration}
-          componentsKey={currentPage.params.componentsKey as string}
+          componentsKey={currentPage.params.componentsKey as string | undefined}
+          checkoutId={currentPage.params.checkoutId as string | undefined}
+          resume={currentPage.params.resume === true}
         />
       );
     case "checkout-iframe":

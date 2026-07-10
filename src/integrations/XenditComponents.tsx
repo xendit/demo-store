@@ -8,7 +8,8 @@ export const XenditComponentsPayment: React.FC<{
   onFail: (message: string) => void;
   componentsKey: string;
   flow: string;
-}> = ({ onSuccess, onFail, componentsKey, flow }) => {
+  resume?: boolean;
+}> = ({ onSuccess, onFail, componentsKey, flow, resume }) => {
   const el = useRef<HTMLDivElement | null>(null);
   const sdkRef = useRef<XenditComponents | null>(null);
 
@@ -19,6 +20,7 @@ export const XenditComponentsPayment: React.FC<{
   useLayoutEffect(() => {
     const sdk = new XenditComponents({
       componentsSdkKey: componentsKey,
+      resume: resume === true,
       iframeFieldAppearance: {
         inputStyles: {
           color: "#252525",
@@ -55,6 +57,9 @@ export const XenditComponentsPayment: React.FC<{
     sdk.addEventListener("submission-begin", () => {
       setSubmitting(true);
     });
+    sdk.addEventListener("submission-resume", () => {
+      setSubmitting(true);
+    });
     sdk.addEventListener("submission-end", (event) => {
       setSubmitting(false);
 
@@ -67,7 +72,7 @@ export const XenditComponentsPayment: React.FC<{
     return () => {
       sdkRef.current?.destroyComponent(channelPicker);
     };
-  }, [componentsKey]);
+  }, [componentsKey, resume]);
 
   useLayoutEffect(() => {
     if (!sdkRef.current) return;

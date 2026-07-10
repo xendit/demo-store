@@ -9,6 +9,7 @@ const POST_SESSION_URL = "https://api.xendit.co/sessions";
 const makeSessionForComponents = async (
   data: PostCheckoutPayload,
   apiKey: string,
+  checkoutId: string,
 ): Promise<ComponentsSession> => {
   const items = [];
   let amount = 0;
@@ -84,6 +85,8 @@ const makeSessionForComponents = async (
     mode: "COMPONENTS",
     components_configuration: {
       origins: config.origins,
+      // checkout_id is our own handle to look the session key back up.
+      return_url: `${config.appUrl}/?checkout_id=${checkoutId}`,
     },
   };
 

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { XenditComponents } from "xendit-components-web";
 import data from "../../../data.json";
 import config from "../../config.json";
@@ -19,7 +19,9 @@ export const CheckoutPage: React.FC<{
   selectedCurrency: string;
   selectedFlow: (typeof config.flows)[number];
   selectedIntegration: (typeof config.integrations)[number];
-  componentsKey: string;
+  componentsKey?: string;
+  checkoutId?: string;
+  resume?: boolean;
 }> = ({
   goToPage,
   cart,
@@ -27,7 +29,36 @@ export const CheckoutPage: React.FC<{
   selectedFlow,
   selectedIntegration,
   componentsKey,
+  checkoutId,
+  resume,
 }) => {
+  const [resolvedKey, setResolvedKey] = useState<string | null>(
+    componentsKey ?? null,
+  );
+
+  useEffect(() => {
+    if (resolvedKey) return;
+    if (!checkoutId) {
+      goToPage("store");
+      return;
+    }
+
+      fetch(`/api/checkout/${checkoutId}`)
+        .then((response) => {
+          if (!response.ok) throw new Error("Checkout not found");
+          return response.json();
+        })
+        .then((data: { components_sdk_key: string }) => {
+          setResolvedKey(data.components_sdk_key);
+        })
+        .catch(() => {
+          // session can no longer be recovered go back to store page
+          goToPage("store");
+        });
+
+
+  }, [checkoutId, resolvedKey, goToPage]);
+
   const [showOverlay, setShowOverlay] = useState(false);
   const toggleOverlay = () => {
     setShowOverlay(!showOverlay);
@@ -92,19 +123,26 @@ export const CheckoutPage: React.FC<{
                     <p className={classes.docsLink}>Read integration guide</p>
                   </a>
                 ) : null}
-                <XenditComponentsPayment
-                  onSuccess={() => {
-                    window.location.assign(
-                      `/?payment_status=success&flow=${selectedFlow.value}&integration=${selectedIntegration.value}`,
-                    );
-                  }}
-                  onFail={(message) => {
-                    alert(`Error: ${message}`);
-                    goToPage("store");
-                  }}
-                  componentsKey={componentsKey}
-                  flow={selectedFlow.value}
-                />
+                {resolvedKey ? (
+                  <XenditComponentsPayment
+                    onSuccess={() => {
+                      window.location.assign(
+                        `/?payment_status=success&flow=${selectedFlow.value}&integration=${selectedIntegration.value}`,
+                      );
+                    }}
+                    onFail={(message) => {
+                      alert(`Error: ${message}`);
+                      goToPage("store");
+                    }}
+                    componentsKey={resolvedKey}
+                    flow={selectedFlow.value}
+                    resume={resume}
+                  />
+                ) : (
+                  <div className={classes.verifying}>
+                    <div className={classes.verifyingSpinner}></div>
+                  </div>
+                )}
               </div>
             </Column>
             {selectedFlow.value !== "save" ? (
