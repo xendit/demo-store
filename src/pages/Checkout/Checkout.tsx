@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { XenditComponents } from "xendit-components-web";
 import data from "../../../data.json";
 import config from "../../config.json";
@@ -6,7 +6,11 @@ import ArrowLeft from "../../icons/ArrowLeft";
 import Eye from "../../icons/Eye";
 import EyeSlash from "../../icons/EyeSlash";
 import { XenditComponentsPayment } from "../../integrations/XenditComponents";
-import type { CartItem as CartItemType, PageType } from "../../types/store";
+import {
+  CHECKOUT_STORAGE_KEY,
+  type CartItem as CartItemType,
+  type PageType,
+} from "../../types/store";
 import { Column, Columns, Container, Page } from "../../ui/Layout/Layout";
 import classes from "./style.module.css";
 
@@ -19,8 +23,7 @@ export const CheckoutPage: React.FC<{
   selectedCurrency: string;
   selectedFlow: (typeof config.flows)[number];
   selectedIntegration: (typeof config.integrations)[number];
-  componentsKey?: string;
-  checkoutId?: string;
+  componentsKey: string;
   resume?: boolean;
 }> = ({
   goToPage,
@@ -29,36 +32,8 @@ export const CheckoutPage: React.FC<{
   selectedFlow,
   selectedIntegration,
   componentsKey,
-  checkoutId,
   resume,
 }) => {
-  const [resolvedKey, setResolvedKey] = useState<string | null>(
-    componentsKey ?? null,
-  );
-
-  useEffect(() => {
-    if (resolvedKey) return;
-    if (!checkoutId) {
-      goToPage("store");
-      return;
-    }
-
-      fetch(`/api/checkout/${checkoutId}`)
-        .then((response) => {
-          if (!response.ok) throw new Error("Checkout not found");
-          return response.json();
-        })
-        .then((data: { components_sdk_key: string }) => {
-          setResolvedKey(data.components_sdk_key);
-        })
-        .catch(() => {
-          // session can no longer be recovered go back to store page
-          goToPage("store");
-        });
-
-
-  }, [checkoutId, resolvedKey, goToPage]);
-
   const [showOverlay, setShowOverlay] = useState(false);
   const toggleOverlay = () => {
     setShowOverlay(!showOverlay);
@@ -123,26 +98,21 @@ export const CheckoutPage: React.FC<{
                     <p className={classes.docsLink}>Read integration guide</p>
                   </a>
                 ) : null}
-                {resolvedKey ? (
-                  <XenditComponentsPayment
-                    onSuccess={() => {
-                      window.location.assign(
-                        `/?payment_status=success&flow=${selectedFlow.value}&integration=${selectedIntegration.value}`,
-                      );
-                    }}
-                    onFail={(message) => {
-                      alert(`Error: ${message}`);
-                      goToPage("store");
-                    }}
-                    componentsKey={resolvedKey}
-                    flow={selectedFlow.value}
-                    resume={resume}
-                  />
-                ) : (
-                  <div className={classes.verifying}>
-                    <div className={classes.verifyingSpinner}></div>
-                  </div>
-                )}
+                <XenditComponentsPayment
+                  onSuccess={() => {
+                    sessionStorage.removeItem(CHECKOUT_STORAGE_KEY);
+                    window.location.assign(
+                      `/?payment_status=success&flow=${selectedFlow.value}&integration=${selectedIntegration.value}`,
+                    );
+                  }}
+                  onFail={(message) => {
+                    alert(`Error: ${message}`);
+                    goToPage("store");
+                  }}
+                  componentsKey={componentsKey}
+                  flow={selectedFlow.value}
+                  resume={resume}
+                />
               </div>
             </Column>
             {selectedFlow.value !== "save" ? (

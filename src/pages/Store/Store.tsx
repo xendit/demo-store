@@ -2,10 +2,11 @@ import { useCallback, useMemo, useState } from "react";
 import data from "../../../data.json";
 import config from "../../config.json";
 import ArrowRight from "../../icons/ArrowRight";
-import type {
-  CartItem as CartItemType,
-  PageType,
-  Product,
+import {
+  CHECKOUT_STORAGE_KEY,
+  type CartItem as CartItemType,
+  type PageType,
+  type Product,
 } from "../../types/store";
 import { ButtonLoadingSpinner } from "../../ui/Button/Button";
 import { Footer } from "../../ui/Footer/Footer";
@@ -86,6 +87,17 @@ export const StorePage: React.FC<{
           window.location.assign(data.checkout_url);
         }
       } else if (data.components_sdk_key) {
+        // A redirect payment will reloads the page. Save what the checkout needs so it can be restored when the customer returns to the return_url.
+        sessionStorage.setItem(
+          CHECKOUT_STORAGE_KEY,
+          JSON.stringify({
+            componentsKey: data.components_sdk_key,
+            flow: selectedFlow.value,
+            currency: selectedCurrency,
+            integration: selectedIntegration.value,
+            cart,
+          }),
+        );
         goToPage("checkout", { componentsKey: data.components_sdk_key });
       }
     } catch (error) {
