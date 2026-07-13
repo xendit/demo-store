@@ -59,6 +59,11 @@
       "url": "https://docs.xendit.co/docs/pay-and-save-2"
     },
     {
+      "flow": "subscription",
+      "integration": "session",
+      "url": "https://docs.xendit.co/docs/how-subscriptions-work"
+    },
+    {
       "flow": "pay",
       "integration": "components",
       "url": "https://docs.xendit.co/docs/components-one-time-payment"
@@ -72,6 +77,11 @@
       "flow": "pay_save",
       "integration": "components",
       "url": "https://docs.xendit.co/docs/pay-and-save-3"
+    },
+    {
+      "flow": "subscription",
+      "integration": "components",
+      "url": "https://docs.xendit.co/docs/how-subscriptions-work"
     },
     {
       "flow": "pay",
