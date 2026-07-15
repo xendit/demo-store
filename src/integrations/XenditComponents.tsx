@@ -1,13 +1,21 @@
 import { useCallback, useLayoutEffect, useRef, useState } from "react";
 import { XenditComponents, XenditFatalErrorEvent } from "xendit-components-web";
+import type { Flow } from "../types/store";
 import { Button } from "../ui/Button/Button.js";
 import classes from "./style.module.css";
+
+const SUBMIT_LABELS: Record<Flow, string> = {
+  pay: "Simulate Payment",
+  save: "Simulate Save Payment Method",
+  pay_save: "Simulate Payment",
+  subscription: "Simulate Subscription",
+};
 
 export const XenditComponentsPayment: React.FC<{
   onSuccess: () => void;
   onFail: (message: string) => void;
   componentsKey: string;
-  flow: string;
+  flow: Flow;
 }> = ({ onSuccess, onFail, componentsKey, flow }) => {
   const el = useRef<HTMLDivElement | null>(null);
   const sdkRef = useRef<XenditComponents | null>(null);
@@ -106,9 +114,7 @@ export const XenditComponentsPayment: React.FC<{
           onClick={onSubmit}
           className={!ready ? classes.submitButtonDisabled : undefined}
         >
-          {flow === "save"
-            ? "Simulate Save Payment Method"
-            : "Simulate Payment"}
+          {SUBMIT_LABELS[flow]}
         </Button>
       ) : null}
       {loading || submitting ? (
