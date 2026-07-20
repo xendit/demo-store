@@ -12,6 +12,7 @@ import {
 } from "./types/store";
 import { CheckoutIframePage } from "./pages/CheckoutIframe/CheckoutIframe";
 
+// in practice, you should store the session id on your server, when a user returns from a redirect based payment, re-initialize the same session and set resume:true.
 const readStoredCheckout = (): StoredCheckout | null => {
   const stored = sessionStorage.getItem(CHECKOUT_STORAGE_KEY);
   if (!stored) return null;
@@ -27,8 +28,7 @@ const App: React.FC = () => {
   const queryParams = new URLSearchParams(window.location.search);
   const paymentStatus = queryParams.get("payment_status");
 
-  // Xendit appends token_request_id when it sends the customer back from a redirect payment. the SDK reads it (and component_status) off the URL to resume.
-  const isReturn = !!queryParams.get("token_request_id");
+  const isReturn = queryParams.get("checkout") === "resume";
   const resumed = isReturn ? readStoredCheckout() : null;
 
   const [currentPage, setCurrentPage] = useState<{

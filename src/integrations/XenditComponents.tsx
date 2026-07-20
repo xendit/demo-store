@@ -20,7 +20,7 @@ export const XenditComponentsPayment: React.FC<{
   useLayoutEffect(() => {
     const sdk = new XenditComponents({
       componentsSdkKey: componentsKey,
-      resume: resume === true,
+      resume: resume,
       iframeFieldAppearance: {
         inputStyles: {
           color: "#252525",
