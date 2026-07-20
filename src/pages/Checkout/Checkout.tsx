@@ -9,10 +9,25 @@ import { XenditComponentsPayment } from "../../integrations/XenditComponents";
 import {
   CHECKOUT_STORAGE_KEY,
   type CartItem as CartItemType,
+  type Flow,
   type PageType,
 } from "../../types/store";
 import { Column, Columns, Container, Page } from "../../ui/Layout/Layout";
 import classes from "./style.module.css";
+
+const FLOW_CHECKOUT_TITLES: Record<Flow, string> = {
+  pay: "Complete Your Payment",
+  save: "Add Payment Method",
+  pay_save: "Pay and Save Payment Method",
+  subscription: "Set Up Your Subscription",
+};
+
+const FLOW_SHOWS_SIDEBAR: Record<Flow, boolean> = {
+  pay: true,
+  save: false,
+  pay_save: true,
+  subscription: false,
+};
 
 const PRODUCTS = data.products;
 const EXCHANGE_RATES = data.exchangeRates as Record<string, number>;
@@ -21,7 +36,7 @@ export const CheckoutPage: React.FC<{
   goToPage: (page: PageType) => void;
   cart: CartItemType[];
   selectedCurrency: string;
-  selectedFlow: (typeof config.flows)[number];
+  selectedFlow: (typeof config.flows)[number] & { value: Flow };
   selectedIntegration: (typeof config.integrations)[number];
   componentsKey: string;
   resume?: boolean;
@@ -76,9 +91,7 @@ export const CheckoutPage: React.FC<{
                   Back
                 </button>
                 <h1 className={classes.checkoutTitle}>
-                  {selectedFlow.value === "save"
-                    ? "Add Payment Method"
-                    : "Complete Your Payment"}
+                  {FLOW_CHECKOUT_TITLES[selectedFlow.value]}
                 </h1>
                 {showOverlay ? (
                   <a
@@ -115,7 +128,7 @@ export const CheckoutPage: React.FC<{
                 />
               </div>
             </Column>
-            {selectedFlow.value !== "save" ? (
+            {FLOW_SHOWS_SIDEBAR[selectedFlow.value] ? (
               <Column>
                 <div className={classes.orderSummaryBox}>
                   <div className={classes.orderSummary}>
