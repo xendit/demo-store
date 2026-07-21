@@ -84,6 +84,7 @@ const makeSessionForComponents = async (
     mode: "COMPONENTS",
     components_configuration: {
       origins: config.origins,
+      return_url: `${config.appUrl}?checkout=resume`,
     },
   };
 

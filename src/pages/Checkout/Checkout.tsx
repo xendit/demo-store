@@ -6,10 +6,11 @@ import ArrowLeft from "../../icons/ArrowLeft";
 import Eye from "../../icons/Eye";
 import EyeSlash from "../../icons/EyeSlash";
 import { XenditComponentsPayment } from "../../integrations/XenditComponents";
-import type {
-  CartItem as CartItemType,
-  Flow,
-  PageType,
+import {
+  CHECKOUT_STORAGE_KEY,
+  type CartItem as CartItemType,
+  type Flow,
+  type PageType,
 } from "../../types/store";
 import { Column, Columns, Container, Page } from "../../ui/Layout/Layout";
 import classes from "./style.module.css";
@@ -38,6 +39,7 @@ export const CheckoutPage: React.FC<{
   selectedFlow: (typeof config.flows)[number] & { value: Flow };
   selectedIntegration: (typeof config.integrations)[number];
   componentsKey: string;
+  resume?: boolean;
 }> = ({
   goToPage,
   cart,
@@ -45,6 +47,7 @@ export const CheckoutPage: React.FC<{
   selectedFlow,
   selectedIntegration,
   componentsKey,
+  resume,
 }) => {
   const [showOverlay, setShowOverlay] = useState(false);
   const toggleOverlay = () => {
@@ -110,6 +113,7 @@ export const CheckoutPage: React.FC<{
                 ) : null}
                 <XenditComponentsPayment
                   onSuccess={() => {
+                    sessionStorage.removeItem(CHECKOUT_STORAGE_KEY);
                     window.location.assign(
                       `/?payment_status=success&flow=${selectedFlow.value}&integration=${selectedIntegration.value}`,
                     );
@@ -120,6 +124,7 @@ export const CheckoutPage: React.FC<{
                   }}
                   componentsKey={componentsKey}
                   flow={selectedFlow.value}
+                  resume={resume}
                 />
               </div>
             </Column>

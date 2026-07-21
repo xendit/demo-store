@@ -3,6 +3,7 @@ type Config = {
   countryByCurrency: { [currency: string]: string };
   origins: string[];
   successUrl: string;
+  appUrl: string;
 };
 
 const appUrl = process.env.APP_URL || "http://localhost:5173";
@@ -33,6 +34,7 @@ const config: Config = {
   },
   origins: componentOrigins,
   successUrl: appUrl + "?payment_status=success",
+  appUrl,
 };
 
 export default config;
