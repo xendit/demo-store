@@ -1,0 +1,51 @@
+- pipeline: "Deploy to Lightsail"
+  trigger_mode: "ON_EVERY_PUSH"
+  ref_name: '(refs/tags/v\d{0,3}\.\d{0,3}\.\d{0,3}$)'
+  ref_type: "WILDCARD"
+  trigger_condition: "ALWAYS"
+  actions:
+    - action: "Install dependencies & build"
+      type: "BUILD"
+      docker_image_name: "library/node"
+      docker_image_tag: "20"
+      execute_commands:
+        - npm ci
+        - npm run build
+      cached_dirs:
+        - "/node_modules"
+
+    - action: "Upload files to Lightsail"
+      type: "RSYNC"
+      local_path: "/"
+      remote_path: "/home/admin/demo-store"
+      login: "admin"
+      host: "${LIGHTSAIL_HOST}"
+      port: "22"
+      authentication_mode: "PRIVATE_KEY"
+      key: "${LIGHTSAIL_SSH_KEY}"
+      delete_extra_files: true
+      ignore_paths:
+        - ".git"
+        - "node_modules"
+
+    - action: "Install dependencies on server"
+      type: "SSH_COMMAND"
+      login: "admin"
+      host: "${LIGHTSAIL_HOST}"
+      port: "22"
+      authentication_mode: "PRIVATE_KEY"
+      key: "${LIGHTSAIL_SSH_KEY}"
+      commands:
+        - cd /home/admin/demo-store
+        - npm ci --omit=dev
+
+    - action: "Restart PM2"
+      type: "SSH_COMMAND"
+      login: "admin"
+      host: "${LIGHTSAIL_HOST}"
+      port: "22"
+      authentication_mode: "PRIVATE_KEY"
+      key: "${LIGHTSAIL_SSH_KEY}"
+      commands:
+        - sudo pm2 restart all
+        - sudo pm2 save
