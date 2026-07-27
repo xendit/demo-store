@@ -25,8 +25,8 @@
           port: "22"
           auth:
             - username: "admin"
-            - method: "SSH_KEY"
-            - key: "${LIGHTSAIL_SSH_KEY}"
+              method: "SSH_KEY"
+              key: "${LIGHTSAIL_SSH_KEY}"
       recursive: true
       delete_extra_files: true
       deployment_excludes:
@@ -42,8 +42,8 @@
           port: "22"
           auth:
             - username: "admin"
-            - method: "SSH_KEY"
-            - key: "${LIGHTSAIL_SSH_KEY}"
+              method: "SSH_KEY"
+              key: "${LIGHTSAIL_SSH_KEY}"
       commands: |-
         cd /home/admin/demo-store
         npm ci --omit=dev
@@ -57,8 +57,8 @@
           port: "22"
           auth:
             - username: "admin"
-            - method: "SSH_KEY"
-            - key: "${LIGHTSAIL_SSH_KEY}"
+              method: "SSH_KEY"
+              key: "${LIGHTSAIL_SSH_KEY}"
       commands: |-
         sudo pm2 restart all
         sudo pm2 save
