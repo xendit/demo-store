@@ -3,6 +3,17 @@
   ref_name: '(refs/tags/v\d{0,3}\.\d{0,3}\.\d{0,3}$)'
   ref_type: "WILDCARD"
   trigger_condition: "ALWAYS"
+  targets:
+    - target: lightsail-server
+      type: SSH
+      name: lightsail-server
+      host: $LIGHTSAIL_HOST
+      auth:
+        method: ASSETS_KEY
+        username: admin
+        asset: LIGHTSAIL_SSH_KEY
+      use_as:
+        target: on
   actions:
     - action: "Install dependencies & build"
       type: "BUILD"
@@ -19,14 +30,7 @@
       local_path: "/"
       remote_path: "/home/admin/demo-store"
       targets:
-        - identifier: lightsail-server
-          type: SSH
-          host: "${LIGHTSAIL_HOST}"
-          port: "22"
-          auth:
-            - username: "admin"
-              method: "SSH_KEY"
-              key: "${LIGHTSAIL_SSH_KEY}"
+        - lightsail-server
       recursive: true
       delete_extra_files: true
       deployment_excludes:
@@ -36,14 +40,7 @@
     - action: "Install dependencies on server"
       type: "SSH_COMMAND"
       targets:
-        - identifier: lightsail-server
-          type: SSH
-          host: "${LIGHTSAIL_HOST}"
-          port: "22"
-          auth:
-            - username: "admin"
-              method: "SSH_KEY"
-              key: "${LIGHTSAIL_SSH_KEY}"
+        - lightsail-server
       commands: |-
         cd /home/admin/demo-store
         npm ci --omit=dev
@@ -51,14 +48,7 @@
     - action: "Restart PM2"
       type: "SSH_COMMAND"
       targets:
-        - identifier: lightsail-server
-          type: SSH
-          host: "${LIGHTSAIL_HOST}"
-          port: "22"
-          auth:
-            - username: "admin"
-              method: "SSH_KEY"
-              key: "${LIGHTSAIL_SSH_KEY}"
+        - lightsail-server
       commands: |-
         sudo pm2 restart all
         sudo pm2 save
