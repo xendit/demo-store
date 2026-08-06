@@ -32,7 +32,6 @@
       targets:
         - lightsail-server
       recursive: true
-      delete_extra_files: true
       deployment_excludes:
         - ".git"
         - "node_modules"
