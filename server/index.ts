@@ -70,6 +70,13 @@ app.post("/api/checkout", async (req, res) => {
   }
 });
 
+app.get("/.well-known/apple-developer-merchantid-domain-association", (_req, res) => {
+  const filePath = path.join(__dirname, "../static/.well-known/apple-developer-merchantid-domain-association");
+  const content = fs.readFileSync(filePath, "utf-8");
+  res.setHeader("Content-Type", "text/plain");
+  res.send(content);
+});
+
 const port = process.env.PORT || 8000;
 
 if (process.env.ENABLE_HTTPS !== "true") {
