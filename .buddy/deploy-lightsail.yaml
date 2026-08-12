@@ -3,6 +3,7 @@
   ref_name: '(refs/tags/v\d{0,3}\.\d{0,3}\.\d{0,3}$)'
   ref_type: "WILDCARD"
   trigger_condition: "ALWAYS"
+
   targets:
     - target: lightsail-server
       type: SSH
@@ -14,6 +15,7 @@
         asset: LIGHTSAIL_SSH_KEY
       use_as:
         target: on
+
   actions:
     - action: "Install dependencies & build"
       type: "BUILD"
