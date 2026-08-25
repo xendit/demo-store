@@ -4,15 +4,24 @@ import classes from "./style.module.css";
 type Props = {
   children: React.ReactNode;
   type?: "button" | "submit" | "reset";
+  variant?: "primary" | "secondary";
 };
 
 export const Button: FC<HTMLProps<HTMLButtonElement> & Props> = (props) => {
-  const { children, className, type = "button", ...rest } = props;
+  const {
+    children,
+    className,
+    type = "button",
+    variant = "primary",
+    ...rest
+  } = props;
+
+  const variantClass = variant === "secondary" ? classes.buttonSecondary : "";
 
   return (
     <button
       {...rest}
-      className={`${classes.button} ${className ?? ""}`}
+      className={`${classes.button} ${variantClass} ${className ?? ""}`}
       type={type}
     >
       {children}

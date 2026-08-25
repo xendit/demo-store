@@ -51,6 +51,11 @@
   background: var(--background-color);
 }
 
+.currencyOptionList {
+  display: flex;
+  flex-direction: column;
+}
+
 .currencyOption {
   padding: 8px 16px;
   cursor: pointer;

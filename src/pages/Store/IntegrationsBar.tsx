@@ -15,7 +15,7 @@ export const IntegrationsBar: React.FC<{
   onChangeFlow: (flow: (typeof config.flows)[number]) => void;
   selectedIntegration: (typeof config.integrations)[number];
   onChangeIntegration: (
-    integration: (typeof config.integrations)[number]
+    integration: (typeof config.integrations)[number],
   ) => void;
 }> = (props) => {
   const {
@@ -34,7 +34,7 @@ export const IntegrationsBar: React.FC<{
     const link = config.docsLinks.find(
       (link) =>
         link.flow === selectedFlow.value &&
-        link.integration === selectedIntegration.value
+        link.integration === selectedIntegration.value,
     );
     return link?.url;
   }, [selectedFlow, selectedIntegration]);
@@ -43,7 +43,7 @@ export const IntegrationsBar: React.FC<{
     onChangeFlow(flow);
     if (selectedIntegration.supportsFlows.indexOf(flow.value) === -1) {
       const compatibleIntegration = config.integrations.find((integration) =>
-        integration.supportsFlows.includes(flow.value)
+        integration.supportsFlows.includes(flow.value),
       );
       if (compatibleIntegration) {
         onChangeIntegration(compatibleIntegration);
@@ -59,13 +59,14 @@ export const IntegrationsBar: React.FC<{
       <div className={classes.integrationsBarContent}>
         <div className={classes.integrationsBarControls}>
           <div>
-            <button
+            <Button
+              variant="secondary"
               className={classes.flowPicker}
               popoverTarget="flow-picker-popover"
             >
               {selectedFlow.title} flow
               <Caret />
-            </button>
+            </Button>
             <div
               id="flow-picker-popover"
               className={[
@@ -95,13 +96,14 @@ export const IntegrationsBar: React.FC<{
           </div>
           using
           <div>
-            <button
+            <Button
+              variant="secondary"
               className={classes.integrationPicker}
               popoverTarget="integration-picker-popover"
             >
               {selectedIntegration.title}
               <Caret />
-            </button>
+            </Button>
             <div
               id="integration-picker-popover"
               className={[

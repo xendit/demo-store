@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import data from "../../../data.json";
+import { Button } from "../Button/Button";
 import { Container } from "../Layout/Layout";
 import classes from "./style.module.css";
 
@@ -37,7 +38,8 @@ export const Header: React.FC<{
           <div className={classes.headerControls}>
             {onChangeCurrency ? (
               <div>
-                <button
+                <Button
+                  variant="secondary"
                   className={classes.currencyPicker}
                   popoverTarget="currency-picker-popover"
                 >
@@ -50,25 +52,27 @@ export const Header: React.FC<{
                     </span>
                   </span>
                   <img src="/assets/caret.svg" />
-                </button>
+                </Button>
                 <div
                   id="currency-picker-popover"
                   className={classes.currencyPickerPopover}
                   popover="auto"
                   ref={currencyButtonRef}
                 >
-                  {currencies.map((currency, i) => (
-                    <button
-                      key={i}
-                      className={classes.currencyOption}
-                      onClick={() => {
-                        onChangeCurrency(currency);
-                        currencyButtonRef.current?.hidePopover();
-                      }}
-                    >
-                      {currency}
-                    </button>
-                  ))}
+                  <div className={classes.currencyOptionList}>
+                    {currencies.map((currency, i) => (
+                      <button
+                        key={i}
+                        className={classes.currencyOption}
+                        onClick={() => {
+                          onChangeCurrency(currency);
+                          currencyButtonRef.current?.hidePopover();
+                        }}
+                      >
+                        {currency}
+                      </button>
+                    ))}
+                  </div>
                 </div>
               </div>
             ) : null}
