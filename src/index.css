@@ -46,38 +46,3 @@ h1 {
   margin-bottom: 24px;
   box-sizing: border-box;
 }
-
-button {
-  position: relative;
-  display: flex;
-  color: black;
-  background-color: var(--background-weak);
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  padding: 12px;
-  border-radius: 8px;
-  cursor: pointer;
-  gap: 8px;
-  font-family: "Inter", sans-serif;
-}
-
-button:hover {
-  background-color: var(--border-color);
-}
-
-button:disabled {
-  background-color: #f5f5f5;
-  color: #aaa;
-  border-color: #eee;
-  cursor: not-allowed;
-}
-
-button:disabled img {
-  opacity: 0.5;
-}
-
-select {
-  border: none;
-  background: none;
-  cursor: pointer;
-  outline: none;
-}
