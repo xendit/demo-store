@@ -43,7 +43,7 @@
       targets:
         - lightsail-server
       commands: |-
-        cd /home/admin/demo-store
+        cd /home/admin/demo-store || exit 1
         npm ci --omit=dev
 
     - action: "Restart PM2"
