@@ -44,6 +44,7 @@
         - lightsail-server
       commands: |-
         cd /home/admin/demo-store || exit 1
+        ls -la package.json package-lock.json
         npm ci --omit=dev
 
     - action: "Restart PM2"
