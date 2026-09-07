@@ -7,6 +7,7 @@ import config from "./config";
 import makeSessionForPaymentLink from "./integrations/payment-link";
 import makeSessionForComponents from "./integrations/components";
 import makeInvoice from "./integrations/invoice";
+import { checkoutRateLimiter } from "./rate-limit";
 
 const app = express();
 
@@ -19,9 +20,7 @@ app.use((req, res, next) => {
 
 app.use(express.static(path.join(__dirname, "static")));
 
-app.use(express.json());
-
-app.post("/api/checkout", async (req, res) => {
+app.post("/api/checkout", checkoutRateLimiter, express.json(), async (req, res) => {
   const data = req.body as PostCheckoutPayload;
 
   // Use the currency to select the correct API key
