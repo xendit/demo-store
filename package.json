@@ -7,11 +7,11 @@
     "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
     "dev:client": "vite",
     "dev:server": "tsx watch -r dotenv/config server/index.ts",
-    "build": "vite build && tsc -b tsconfig.server.json",
+    "build": "vite build && tsc -b server/tsconfig.json",
     "lint": "eslint .",
     "preview": "vite preview",
     "start": "node -r dotenv/config dist/index.js",
-    "tsc": "tsc"
+    "tsc": "tsc -b"
   },
   "dependencies": {
     "dotenv": "17.4.2",
