@@ -79,7 +79,6 @@ export const IntegrationsBar: React.FC<{
               {config.flows.map((flow) => (
                 <button
                   key={flow.value}
-                  disabled={flow.disabled}
                   className={classes.popoverOption}
                   onClick={() => {
                     handleSelectFlow(flow);
