@@ -7,16 +7,11 @@ const limiter = new RateLimiterMemory({
   duration: 60,
 });
 
-// This IP is used as the rate-limit key, CF-Connecting-IP (always overwritten by Cloudflare) is preferred over X-Forwarded-For first entry.
+// Use the last X-Forwarded-For as the rate-limit key.
 function getClientIp(req: Request): string {
-  const cfIp = req.headers["cf-connecting-ip"];
-  if (typeof cfIp === "string" && cfIp) {
-    return cfIp;
-  }
-
   const xForwardedFor = req.headers["x-forwarded-for"];
   if (typeof xForwardedFor === "string" && xForwardedFor) {
-    return xForwardedFor.split(",")[0].trim();
+    return xForwardedFor.split(",").pop()?.trim() ?? "unknown";
   }
 
   return req.ip ?? "unknown";
@@ -25,10 +20,11 @@ function getClientIp(req: Request): string {
 export async function checkoutRateLimiter(req: Request, res: Response, next: NextFunction) {
   try {
     await limiter.consume(getClientIp(req));
-    next();
   } catch (rejection) {
     const msBeforeNext = (rejection as { msBeforeNext?: number })?.msBeforeNext ?? 1000;
     res.setHeader("Retry-After", String(Math.ceil(msBeforeNext / 1000)));
     res.status(429).json({ error: "Too many requests, please try again later." });
+    return;
   }
+  next();
 }
