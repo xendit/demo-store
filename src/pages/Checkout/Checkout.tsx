@@ -36,7 +36,7 @@ export const CheckoutPage: React.FC<{
   goToPage: (page: PageType) => void;
   cart: CartItemType[];
   selectedCurrency: string;
-  selectedFlow: (typeof config.flows)[number] & { value: Flow };
+  selectedFlow: (typeof config.flows)[number];
   selectedIntegration: (typeof config.integrations)[number];
   componentsKey: string;
   resume?: boolean;
@@ -91,7 +91,7 @@ export const CheckoutPage: React.FC<{
                   Back
                 </button>
                 <h1 className={classes.checkoutTitle}>
-                  {FLOW_CHECKOUT_TITLES[selectedFlow.value]}
+                  {FLOW_CHECKOUT_TITLES[selectedFlow.value as Flow]}
                 </h1>
                 {showOverlay ? (
                   <a
@@ -123,12 +123,12 @@ export const CheckoutPage: React.FC<{
                     goToPage("store");
                   }}
                   componentsKey={componentsKey}
-                  flow={selectedFlow.value}
+                  flow={selectedFlow.value as Flow}
                   resume={resume}
                 />
               </div>
             </Column>
-            {FLOW_SHOWS_SIDEBAR[selectedFlow.value] ? (
+            {FLOW_SHOWS_SIDEBAR[selectedFlow.value as Flow] ? (
               <Column>
                 <div className={classes.orderSummaryBox}>
                   <div className={classes.orderSummary}>

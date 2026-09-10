@@ -2,6 +2,7 @@ import express from "express";
 import path from "path";
 import https from "https";
 import fs from "fs";
+import helmet from "helmet";
 
 import config from "./config";
 import makeSessionForPaymentLink from "./integrations/payment-link";
@@ -11,9 +12,11 @@ import { checkoutRateLimiter } from "./rate-limit";
 
 const app = express();
 
+app.use(helmet());
+
 app.use((req, res, next) => {
-  if (req.hostname === 'demo.xendit.co') {
-    return res.redirect(301, 'https://demo-store.xendit.co' + req.originalUrl);
+  if (req.hostname === "demo.xendit.co") {
+    return res.redirect(301, "https://demo-store.xendit.co" + req.originalUrl);
   }
   next();
 });
@@ -36,7 +39,7 @@ app.post("/api/checkout", checkoutRateLimiter, express.json(), async (req, res) 
       case "session": {
         const paymentLinkSession = await makeSessionForPaymentLink(
           data,
-          apiKey
+          apiKey,
         );
         res
           .status(200)
@@ -69,12 +72,18 @@ app.post("/api/checkout", checkoutRateLimiter, express.json(), async (req, res) 
   }
 });
 
-app.get("/.well-known/apple-developer-merchantid-domain-association", (_req, res) => {
-  const filePath = path.join(__dirname, "../static/.well-known/apple-developer-merchantid-domain-association");
-  const content = fs.readFileSync(filePath, "utf-8");
-  res.setHeader("Content-Type", "text/plain");
-  res.send(content);
-});
+app.get(
+  "/.well-known/apple-developer-merchantid-domain-association",
+  (_req, res) => {
+    const filePath = path.join(
+      __dirname,
+      "../static/.well-known/apple-developer-merchantid-domain-association",
+    );
+    const content = fs.readFileSync(filePath, "utf-8");
+    res.setHeader("Content-Type", "text/plain");
+    res.send(content);
+  },
+);
 
 const port = process.env.PORT || 8000;
 

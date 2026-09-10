@@ -1,24 +1,22 @@
 {
   "compilerOptions": {
-    "target": "es2022",
-    "lib": ["es2023"],
-    "module": "commonjs",
+    "composite": true,
+    "tsBuildInfoFile": "../node_modules/.tmp/tsconfig.server.tsbuildinfo",
+    "target": "ES2022",
+    "lib": ["ES2023"],
+    "module": "node16",
+    "moduleResolution": "node16",
     "types": ["node", "express"],
     "skipLibCheck": true,
 
     /* Output */
-    "outDir": "./dist",
-    "rootDir": "./server",
-    "incremental": false,
-    "composite": false,
+    "outDir": "../dist",
+    "rootDir": ".",
 
     /* Module Resolution */
-    "moduleResolution": "node",
-    "allowImportingTsExtensions": false,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "moduleDetection": "force",
-    "noEmit": false,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
 
@@ -28,6 +26,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["server/**/*"],
-  "exclude": ["node_modules", "dist"]
+  "include": ["."],
+  "exclude": ["../node_modules", "../dist"]
 }
