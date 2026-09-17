@@ -19,7 +19,8 @@
     "helmet": "8.3.0",
     "react": "19.2.8",
     "react-dom": "19.2.8",
-    "xendit-components-web": "0.0.31"
+    "xendit-components-web": "0.0.31",
+    "rate-limiter-flexible": "^11.2.0"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",
