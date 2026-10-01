@@ -2,6 +2,7 @@ import { useCallback, useMemo, useState } from "react";
 import data from "../../../data.json";
 import config from "../../config.json";
 import ArrowRight from "../../icons/ArrowRight";
+import { XenditComponentsQrOnly } from "../../integrations/XenditComponentsQrOnly";
 import {
   CHECKOUT_STORAGE_KEY,
   type CartItem as CartItemType,
@@ -52,6 +53,7 @@ export const StorePage: React.FC<{
 }) => {
   const [checkingOut, setCheckingOut] = useState(false);
   const [toasts, setToasts] = useState<string[]>([]);
+  const [qrOnlySession, setQrOnlySession] = useState<string | null>(null);
 
   const featuredProducts = useMemo(() => {
     return PRODUCTS.filter((product) => product.isFeatured);
@@ -87,24 +89,56 @@ export const StorePage: React.FC<{
           window.location.assign(data.checkout_url);
         }
       } else if (data.components_sdk_key) {
-        // A redirect payment will reloads the page. Save what the checkout needs so it can be restored when the customer returns to the return_url.
-        sessionStorage.setItem(
-          CHECKOUT_STORAGE_KEY,
-          JSON.stringify({
+        // Check if this is QR-only mode based on selected integration
+        const isQrOnly = selectedIntegration.value === "components-qr";
+        if (isQrOnly) {
+          // Stay on store page and show QR component inline
+          // Keep checkingOut true to show loading spinner
+          setCheckingOut(true);
+          setQrOnlySession(data.components_sdk_key);
+        } else {
+          // A redirect payment will reload the page. Save what the checkout needs so it can be restored when the customer returns to the return_url.
+          sessionStorage.setItem(
+            CHECKOUT_STORAGE_KEY,
+            JSON.stringify({
+              componentsKey: data.components_sdk_key,
+              flow: selectedFlow.value,
+              currency: selectedCurrency,
+              integration: selectedIntegration.value,
+              cart,
+              qrOnly: false,
+            }),
+          );
+          goToPage("checkout", {
             componentsKey: data.components_sdk_key,
-            flow: selectedFlow.value,
-            currency: selectedCurrency,
-            integration: selectedIntegration.value,
-            cart,
-          }),
-        );
-        goToPage("checkout", { componentsKey: data.components_sdk_key });
+            qrOnly: false,
+          });
+        }
       }
     } catch (error) {
       setCheckingOut(false);
       window.alert((error as Error).message);
     }
   }, [cart, selectedCurrency, selectedFlow, selectedIntegration, goToPage]);
+
+  const handleQrOnlySuccess = useCallback(() => {
+    setCheckingOut(false);
+    setQrOnlySession(null);
+    window.location.assign(
+      `/?payment_status=success&flow=${selectedFlow.value}&integration=${selectedIntegration.value}`,
+    );
+  }, [selectedFlow, selectedIntegration]);
+
+  const handleQrOnlyFail = useCallback((message: string) => {
+    setCheckingOut(false);
+    setQrOnlySession(null);
+    window.alert(`Error: ${message}`);
+  }, []);
+
+  const handleQrOnlyEnd = useCallback(() => {
+    setCheckingOut(false);
+    setQrOnlySession(null);
+  }, []);
 
   const handleAddToCart = useCallback(
     (productId: number) => {
@@ -160,6 +194,7 @@ export const StorePage: React.FC<{
                 onChangeFlow={onChangeFlow}
                 selectedIntegration={selectedIntegration}
                 onChangeIntegration={onChangeIntegration}
+                selectedCurrency={selectedCurrency}
               />
 
               {selectedFlow.omitsItems ? (
@@ -211,6 +246,15 @@ export const StorePage: React.FC<{
       <Footer />
 
       <Toasts toasts={toasts} />
+
+      {qrOnlySession ? (
+        <XenditComponentsQrOnly
+          componentsKey={qrOnlySession}
+          onSuccess={handleQrOnlySuccess}
+          onFail={handleQrOnlyFail}
+          onEnd={handleQrOnlyEnd}
+        />
+      ) : null}
     </div>
   );
 };

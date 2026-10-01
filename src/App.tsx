@@ -49,7 +49,8 @@ const App: React.FC = () => {
     resumed?.currency ?? "IDR",
   );
   const [selectedFlow, setSelectedFlow] = useState(
-    config.flows.find((flow) => flow.value === resumed?.flow) ?? config.flows[0],
+    config.flows.find((flow) => flow.value === resumed?.flow) ??
+      config.flows[0],
   );
   const [selectedIntegration, setSelectedIntegration] = useState(
     config.integrations.find(
