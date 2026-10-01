@@ -1,6 +1,5 @@
-import { useMemo, useRef } from "react";
+import { useRef } from "react";
 import config from "../../config.json";
-import ArrowSquareOut from "../../icons/ArrowSquareOut";
 import Caret from "../../icons/Caret";
 import Cart from "../../icons/Cart";
 import type { CartItem as CartItemType } from "../../types/store";
@@ -13,43 +12,9 @@ export const IntegrationsBar: React.FC<{
   onCheckout: () => void;
   selectedFlow: (typeof config.flows)[number];
   onChangeFlow: (flow: (typeof config.flows)[number]) => void;
-  selectedIntegration: (typeof config.integrations)[number];
-  onChangeIntegration: (
-    integration: (typeof config.integrations)[number],
-  ) => void;
 }> = (props) => {
-  const {
-    cart,
-    checkingOut,
-    onCheckout,
-    selectedFlow,
-    onChangeFlow,
-    selectedIntegration,
-    onChangeIntegration,
-  } = props;
+  const { cart, checkingOut, onCheckout, selectedFlow, onChangeFlow } = props;
   const flowPopoverRef = useRef<HTMLDivElement>(null);
-  const integrationButtonRef = useRef<HTMLDivElement>(null);
-
-  const docsLink = useMemo(() => {
-    const link = config.docsLinks.find(
-      (link) =>
-        link.flow === selectedFlow.value &&
-        link.integration === selectedIntegration.value,
-    );
-    return link?.url;
-  }, [selectedFlow, selectedIntegration]);
-
-  const handleSelectFlow = (flow: (typeof config.flows)[number]) => {
-    onChangeFlow(flow);
-    if (selectedIntegration.supportsFlows.indexOf(flow.value) === -1) {
-      const compatibleIntegration = config.integrations.find((integration) =>
-        integration.supportsFlows.includes(flow.value),
-      );
-      if (compatibleIntegration) {
-        onChangeIntegration(compatibleIntegration);
-      }
-    }
-  };
 
   return (
     <div className={classes.integrationsBar}>
@@ -81,54 +46,13 @@ export const IntegrationsBar: React.FC<{
                   key={flow.value}
                   className={classes.popoverOption}
                   onClick={() => {
-                    handleSelectFlow(flow);
+                    onChangeFlow(flow);
                     flowPopoverRef.current?.hidePopover();
                   }}
                 >
                   <div className={classes.popoverOptionTitle}>{flow.title}</div>
                   <div className={classes.popoverOptionDescription}>
                     {flow.description}
-                  </div>
-                </button>
-              ))}
-            </div>
-          </div>
-          using
-          <div>
-            <Button
-              variant="secondary"
-              className={classes.integrationPicker}
-              popoverTarget="integration-picker-popover"
-            >
-              {selectedIntegration.title}
-              <Caret />
-            </Button>
-            <div
-              id="integration-picker-popover"
-              className={[
-                classes.integrationPickerPopover,
-                classes.pickerPopover,
-              ].join(" ")}
-              popover="auto"
-              ref={integrationButtonRef}
-            >
-              {config.integrations.map((integration) => (
-                <button
-                  key={integration.value}
-                  className={classes.popoverOption}
-                  disabled={
-                    integration.supportsFlows.indexOf(selectedFlow.value) === -1
-                  }
-                  onClick={() => {
-                    onChangeIntegration(integration);
-                    integrationButtonRef.current?.hidePopover();
-                  }}
-                >
-                  <div className={classes.popoverOptionTitle}>
-                    {integration.title}
-                  </div>
-                  <div className={classes.popoverOptionDescription}>
-                    {integration.description}
                   </div>
                 </button>
               ))}
@@ -152,14 +76,6 @@ export const IntegrationsBar: React.FC<{
           </Button>
         ) : null}
       </div>
-
-      {docsLink ? (
-        <div className={classes.integrationDocs}>
-          <a href={docsLink} target="_blank" rel="noreferrer">
-            Read more about this integration <ArrowSquareOut />
-          </a>
-        </div>
-      ) : null}
     </div>
   );
 };

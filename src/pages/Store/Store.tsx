@@ -3,7 +3,6 @@ import data from "../../../data.json";
 import config from "../../config.json";
 import ArrowRight from "../../icons/ArrowRight";
 import {
-  CHECKOUT_STORAGE_KEY,
   type CartItem as CartItemType,
   type PageType,
   type Product,
@@ -23,8 +22,6 @@ import { Toasts } from "../../ui/Toasts/Toasts";
 import { IntegrationsBar } from "./IntegrationsBar";
 import classes from "./style.module.css";
 
-const queryString = new URLSearchParams(window.location.search);
-
 const PRODUCTS: Product[] = data.products;
 
 export const StorePage: React.FC<{
@@ -32,20 +29,14 @@ export const StorePage: React.FC<{
   onChangeCurrency: (currency: string) => void;
   selectedFlow: (typeof config.flows)[number];
   onChangeFlow: (flow: (typeof config.flows)[number]) => void;
-  selectedIntegration: (typeof config.integrations)[number];
-  onChangeIntegration: (
-    integration: (typeof config.integrations)[number],
-  ) => void;
   cart: CartItemType[];
   onAddToCart: (productId: number) => void;
-  goToPage: (page: PageType, params?: Record<string, unknown>) => void;
+  goToPage: (page: PageType) => void;
 }> = ({
   selectedCurrency,
   onChangeCurrency,
   selectedFlow,
   onChangeFlow,
-  selectedIntegration,
-  onChangeIntegration,
   cart,
   onAddToCart,
   goToPage,
@@ -57,54 +48,14 @@ export const StorePage: React.FC<{
     return PRODUCTS.filter((product) => product.isFeatured);
   }, []);
 
-  const onCreateCheckout = useCallback(async () => {
+  // STUB: Simulates checkout - just goes to success page after a delay
+  const onCheckout = useCallback(async () => {
     setCheckingOut(true);
-    try {
-      const response = await fetch("/api/checkout", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          flow: selectedFlow.value,
-          integration: selectedIntegration.value,
-          currency: selectedCurrency,
-          cart,
-        }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to create checkout");
-      }
-
-      setCheckingOut(false);
-      const data = await response.json();
-      if (data.checkout_url) {
-        if (queryString.has("payment-link-iframe")) {
-          goToPage("checkout-iframe", { paymentLinkUrl: data.checkout_url });
-        } else {
-          window.location.assign(data.checkout_url);
-        }
-      } else if (data.components_sdk_key) {
-        // A redirect payment will reloads the page. Save what the checkout needs so it can be restored when the customer returns to the return_url.
-        sessionStorage.setItem(
-          CHECKOUT_STORAGE_KEY,
-          JSON.stringify({
-            componentsKey: data.components_sdk_key,
-            flow: selectedFlow.value,
-            currency: selectedCurrency,
-            integration: selectedIntegration.value,
-            cart,
-          }),
-        );
-        goToPage("checkout", { componentsKey: data.components_sdk_key });
-      }
-    } catch (error) {
-      setCheckingOut(false);
-      window.alert((error as Error).message);
-    }
-  }, [cart, selectedCurrency, selectedFlow, selectedIntegration, goToPage]);
+    // Simulate network delay
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    setCheckingOut(false);
+    goToPage("success");
+  }, [goToPage]);
 
   const handleAddToCart = useCallback(
     (productId: number) => {
@@ -117,9 +68,7 @@ export const StorePage: React.FC<{
       onAddToCart(productId);
       setToasts((prevToasts) => [
         ...prevToasts,
-        `✅ ${
-          PRODUCTS.find((p) => p.id === productId)?.title
-        } added to your cart!`,
+        `${PRODUCTS.find((p) => p.id === productId)?.title} added to your cart!`,
       ]);
       setTimeout(() => {
         setToasts((prevToasts) => prevToasts.slice(1));
@@ -155,11 +104,9 @@ export const StorePage: React.FC<{
               <IntegrationsBar
                 cart={cart}
                 checkingOut={checkingOut}
-                onCheckout={onCreateCheckout}
+                onCheckout={onCheckout}
                 selectedFlow={selectedFlow}
                 onChangeFlow={onChangeFlow}
-                selectedIntegration={selectedIntegration}
-                onChangeIntegration={onChangeIntegration}
               />
 
               {selectedFlow.omitsItems ? (
@@ -172,7 +119,7 @@ export const StorePage: React.FC<{
                     type="button"
                     className={classes.addPaymentMethodButton}
                     disabled={checkingOut}
-                    onClick={onCreateCheckout}
+                    onClick={onCheckout}
                   >
                     Add Payment Method{" "}
                     {checkingOut ? (
@@ -228,12 +175,10 @@ const StoreCard: React.FC<{
       <div className={classes.storeLogoContainer}>
         <img className={classes.storeLogo} src="/assets/logo-hero.svg" />
       </div>
-      <h2 className={classes.storeCardSubtitle}>
-        Xendit Official Plushie Store
-      </h2>
+      <h2 className={classes.storeCardSubtitle}>Official Plushie Store</h2>
       <p className={classes.storeCardDescription}>
-        Welcome to Plushxie! 👋🏻 <br />
-        We’re bringing the cutest badgers straight from Blok M.
+        Welcome to Plushxie! <br />
+        We're bringing the cutest badgers straight from Blok M.
       </p>
       <div className={classes.dottedLine}></div>
       <p className={classes.storeCardDisclaimer}>

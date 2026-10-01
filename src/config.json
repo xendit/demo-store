@@ -8,85 +8,18 @@
     {
       "value": "save",
       "title": "Save",
-      "description": "To capture customer’s payment method",
+      "description": "To capture customer's payment method",
       "omitsItems": true
     },
     {
       "value": "pay_save",
       "title": "Pay and Save",
-      "description": "Do a payment along with saving customer’s payment method. For this example, saving is OPTIONAL."
+      "description": "Do a payment along with saving customer's payment method. For this example, saving is OPTIONAL."
     },
     {
       "value": "subscription",
       "title": "Subscription",
       "description": "To make recurring charges to your customers"
-    }
-  ],
-  "integrations": [
-    {
-      "value": "session",
-      "title": "Sessions - Payment Link",
-      "description": "Use Xendit’s Checkout. Fastest and least effort to integrate.",
-      "supportsFlows": ["pay", "save", "pay_save", "subscription"]
-    },
-    {
-      "value": "components",
-      "title": "Sessions - Xendit Components",
-      "description": "Use your own checkout page with our Payment Components.",
-      "supportsFlows": ["pay", "save", "pay_save", "subscription"]
-    },
-    {
-      "value": "invoice",
-      "title": "Payment Link (Legacy)",
-      "description": "Our old checkout page. We don't recommend using this for new integrations.",
-      "supportsFlows": ["pay"]
-    }
-  ],
-  "docsLinks": [
-    {
-      "flow": "pay",
-      "integration": "session",
-      "url": "https://docs.xendit.co/docs/payment-1"
-    },
-    {
-      "flow": "save",
-      "integration": "session",
-      "url": "https://docs.xendit.co/docs/storing-payment-details"
-    },
-    {
-      "flow": "pay_save",
-      "integration": "session",
-      "url": "https://docs.xendit.co/docs/pay-and-save-2"
-    },
-    {
-      "flow": "subscription",
-      "integration": "session",
-      "url": "https://docs.xendit.co/docs/how-subscriptions-work"
-    },
-    {
-      "flow": "pay",
-      "integration": "components",
-      "url": "https://docs.xendit.co/docs/components-one-time-payment"
-    },
-    {
-      "flow": "save",
-      "integration": "components",
-      "url": "https://docs.xendit.co/docs/components-save-payment-method"
-    },
-    {
-      "flow": "pay_save",
-      "integration": "components",
-      "url": "https://docs.xendit.co/docs/pay-and-save-3"
-    },
-    {
-      "flow": "subscription",
-      "integration": "components",
-      "url": "https://docs.xendit.co/docs/how-subscriptions-work"
-    },
-    {
-      "flow": "pay",
-      "integration": "invoice",
-      "url": "https://archive.docs.xendit.co/payment-link/single-payment-link"
     }
   ]
 }

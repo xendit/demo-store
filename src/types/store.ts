@@ -1,6 +1,6 @@
 import data from "../../data.json";
 
-export type PageType = "store" | "checkout" | "checkout-iframe" | "success";
+export type PageType = "store" | "success";
 
 export type Flow = "pay" | "save" | "pay_save" | "subscription";
 
@@ -10,13 +10,3 @@ export interface CartItem {
 }
 
 export type Product = (typeof data.products)[number];
-
-export const CHECKOUT_STORAGE_KEY = "xendit-demo-checkout";
-
-export interface StoredCheckout {
-  componentsKey: string;
-  flow: string;
-  currency: string;
-  integration: string;
-  cart: CartItem[];
-}

@@ -1,11 +1,22 @@
 import type { FC } from "react";
 import { useMemo } from "react";
-import { XenditComponents } from "xendit-components-web";
 import data from "../../../data.json";
 import type { Product } from "../../types/store";
 import classes from "./style.module.css";
 
 const EXCHANGE_RATES: { [currency: string]: number } = data.exchangeRates;
+
+/**
+ * Utility function to format amounts with currency.
+ */
+function formatAmount(amount: number, currency: string): string {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: currency,
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+  }).format(amount);
+}
 
 export const ProductsList: FC<{
   products: Product[];
@@ -92,9 +103,7 @@ const ProductItem: React.FC<{
           </div>
         </div>
         <p className={classes.productPrice}>
-          {product.isSoldOut
-            ? "Sold out!"
-            : XenditComponents.amountFormat(price, currency)}
+          {product.isSoldOut ? "Sold out!" : formatAmount(price, currency)}
         </p>
       </div>
     </button>

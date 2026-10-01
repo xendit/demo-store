@@ -3,29 +3,20 @@ import classes from "./style.module.css";
 
 export const Footer: React.FC = () => {
   return (
-    <div className={classes.footer}>
+    <footer className={classes.footer}>
       <Container>
         <div className={classes.footerInner}>
-          <p>&copy; 2026 Xendit, Inc.</p>
+          <p>&copy; 2026 Demo Store</p>
           <p className={classes.footerLinks}>
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://docs.xendit.co/apidocs"
-            >
+            <a target="_blank" rel="noopener noreferrer" href="#">
               API Reference
-            </a>{" "}
-            ·{" "}
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://docs.xendit.co/docs/overview"
-            >
+            </a>
+            <a target="_blank" rel="noopener noreferrer" href="#">
               Documentation
             </a>
           </p>
         </div>
       </Container>
-    </div>
+    </footer>
   );
 };

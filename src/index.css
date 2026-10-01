@@ -1,9 +1,9 @@
 :root {
-  /* variables to style Xendit components */
-  --xendit-font-family: Inter, sans-serif;
-  --xendit-color-border: #e6e6eb;
-  --xendit-color-text: #252525;
-  --xendit-color-text-placeholder: #7d7d7d;
+  /* variables for component styling */
+  --component-font-family: Inter, sans-serif;
+  --component-color-border: #e6e6eb;
+  --component-color-text: #252525;
+  --component-color-text-placeholder: #7d7d7d;
 }
 
 html {
