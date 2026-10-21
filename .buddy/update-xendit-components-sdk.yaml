@@ -12,6 +12,8 @@
       working_directory: "/buddy/demo-store"
       docker_image_name: "library/node"
       docker_image_tag: "20"
+      setup_commands:
+        - "apt-get update && apt-get -y install jq"
       execute_commands:
         - 'CURRENT_VERSION=$(jq -r ".dependencies[\"xendit-components-web\"]" package.json)'
         - "LATEST_VERSION=$(npm view xendit-components-web version)"
