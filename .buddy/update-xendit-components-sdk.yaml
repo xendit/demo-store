@@ -5,7 +5,6 @@
   priority: "NORMAL"
   fetch_all_refs: true
   trigger_condition: "ALWAYS"
-  folder: "Maintenance"
   clone_depth: 1
   actions:
     - action: "Update SDK and create PR if needed"
