@@ -17,18 +17,42 @@
         - 'echo "$GITHUB_TOKEN" | gh auth login --with-token'
         - "gh auth setup-git"
       execute_commands:
-        - 'CURRENT_VERSION=$(jq -r ".dependencies[\"xendit-components-web\"]" package.json)'
-        - "LATEST_VERSION=$(npm view xendit-components-web version)"
-        - 'if [ "$CURRENT_VERSION" = "$LATEST_VERSION" ]; then echo "Already up to date ($CURRENT_VERSION)"; exit 0; fi'
-        - 'echo "Updating $CURRENT_VERSION -> $LATEST_VERSION"'
-        - "npm update xendit-components-web --save"
-        - 'git config user.email "ci@xendit.co"'
-        - 'git config user.name "CI"'
-        - 'git checkout -b "chore/update-xendit-components-sdk-$LATEST_VERSION"'
-        - "git add package.json package-lock.json"
-        - 'git commit --no-verify -m "chore: update xendit-components-web SDK to $LATEST_VERSION"'
-        - "git push origin HEAD --no-verify"
-        - 'gh pr create --title "chore: update xendit-components-web SDK to $LATEST_VERSION" --body "Automated PR to update xendit-components-web SDK to version $LATEST_VERSION." --base main'
+        - |
+          set -e
+          CURRENT_VERSION=$(jq -r '.dependencies["xendit-components-web"]' package.json)
+          LATEST_VERSION=$(npm view xendit-components-web version)
+
+          if [ "$CURRENT_VERSION" = "$LATEST_VERSION" ]; then
+            echo "Already up to date ($CURRENT_VERSION)"
+            exit 0
+          fi
+
+          echo "Updating $CURRENT_VERSION -> $LATEST_VERSION"
+          jq '.dependencies["xendit-components-web"] = "'"$LATEST_VERSION"'"' package.json > package.json.tmp
+          mv package.json.tmp package.json
+          npm install
+
+          git config user.email "ci@xendit.co"
+          git config user.name "CI"
+          git config credential.helper '!f() { echo password=$GITHUB_TOKEN; }; f'
+
+          BRANCH_NAME="chore/update-xendit-components-sdk-$LATEST_VERSION"
+          git checkout -b "$BRANCH_NAME"
+          git add package.json package-lock.json
+          git commit --no-verify -m "chore: update xendit-components-web SDK to $LATEST_VERSION"
+          git push origin HEAD --no-verify
+
+          curl --fail --silent --request POST \
+            --url "https://api.github.com/repos/xendit/demo-store/pulls" \
+            --header "Accept: application/vnd.github+json" \
+            --header "Authorization: Bearer $GITHUB_TOKEN" \
+            --header "X-GitHub-Api-Version: 2022-11-28" \
+            --data '{
+              "title": "chore: update xendit-components-web SDK to '"$LATEST_VERSION"'",
+              "body": "Automated PR to update xendit-components-web SDK to version '"$LATEST_VERSION"'.",
+              "head": "'"$BRANCH_NAME"'",
+              "base": "main"
+            }'
       volume_mappings:
         - "/:/buddy/demo-store"
       shell: "BASH"
