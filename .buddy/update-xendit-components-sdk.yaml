@@ -1,0 +1,30 @@
+- pipeline: "Update xendit-components-web SDK"
+  trigger_mode: "ON_EVERY_PUSH"
+  ref_name: "refs/heads/main"
+  ref_type: "BRANCH"
+  priority: "NORMAL"
+  fetch_all_refs: true
+  trigger_condition: "ALWAYS"
+  clone_depth: 1
+  actions:
+    - action: "Update SDK and create PR if needed"
+      type: "BUILD"
+      working_directory: "/buddy/demo-store"
+      docker_image_name: "library/node"
+      docker_image_tag: "20"
+      execute_commands:
+        - 'CURRENT_VERSION=$(jq -r ".dependencies[\"xendit-components-web\"]" package.json)'
+        - "LATEST_VERSION=$(npm view xendit-components-web version)"
+        - 'if [ "$CURRENT_VERSION" = "$LATEST_VERSION" ]; then echo "Already up to date ($CURRENT_VERSION)"; exit 0; fi'
+        - 'echo "Updating $CURRENT_VERSION -> $LATEST_VERSION"'
+        - "npm update xendit-components-web --save"
+        - 'git config user.email "ci@xendit.co"'
+        - 'git config user.name "CI"'
+        - 'git checkout -b "chore/update-xendit-components-sdk-$LATEST_VERSION"'
+        - "git add package.json package-lock.json"
+        - 'git commit --no-verify -m "chore: update xendit-components-web SDK to $LATEST_VERSION"'
+        - "git push origin HEAD --no-verify"
+        - 'gh pr create --title "chore: update xendit-components-web SDK to $LATEST_VERSION" --body "Automated PR to update xendit-components-web SDK to version $LATEST_VERSION." --base main'
+      volume_mappings:
+        - "/:/buddy/demo-store"
+      shell: "BASH"
