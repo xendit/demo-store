@@ -6,6 +6,7 @@
   fetch_all_refs: true
   trigger_condition: "ALWAYS"
   clone_depth: 1
+  always_from_scratch: true
   actions:
     - action: "Update SDK and create PR if needed"
       type: "BUILD"
@@ -32,9 +33,9 @@
 
           git config user.email "ci@xendit.co"
           git config user.name "CI"
-          git config credential.helper '!f() { echo password=$GITHUB_TOKEN; }; f'
+          git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/xendit/demo-store.git"
 
-          BRANCH_NAME="chore/update-xendit-components-sdk-$LATEST_VERSION"
+          BRANCH_NAME="chore/update-xendit-components-sdk-$RANDOM"
           git checkout -b "$BRANCH_NAME"
           git add package.json package-lock.json
           git commit --no-verify -m "chore: update xendit-components-web SDK to $LATEST_VERSION"
