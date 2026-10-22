@@ -14,8 +14,6 @@
       docker_image_tag: "20"
       setup_commands:
         - "apt-get update && apt-get -y install jq"
-        - 'echo "$GITHUB_TOKEN" | gh auth login --with-token'
-        - "gh auth setup-git"
       execute_commands:
         - |
           set -e
