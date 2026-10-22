@@ -1,5 +1,7 @@
 - pipeline: "Update xendit-components-web SDK"
-  trigger_mode: "ON_EVERY_PUSH"
+  trigger_mode: "SCHEDULED"
+  start_date: "2024-01-01T00:00:00Z"
+  delay: 1440
   ref_name: "refs/heads/main"
   ref_type: "BRANCH"
   priority: "NORMAL"
@@ -23,6 +25,17 @@
 
           if [ "$CURRENT_VERSION" = "$LATEST_VERSION" ]; then
             echo "Already up to date ($CURRENT_VERSION)"
+            exit 0
+          fi
+
+          # Check if there's already an open PR for this version
+          EXISTING_PR=$(curl --fail --silent \
+            --url "https://api.github.com/search/issues?q=repo:xendit/demo-store+is:pr+is:open+in:title+xendit-components-web+$LATEST_VERSION" \
+            --header "Accept: application/vnd.github+json" \
+            | jq -r '.items[0].number // empty')
+
+          if [ -n "$EXISTING_PR" ]; then
+            echo "PR already exists for version $LATEST_VERSION (#$EXISTING_PR)"
             exit 0
           fi
 
