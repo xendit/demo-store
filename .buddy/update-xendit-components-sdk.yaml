@@ -1,5 +1,7 @@
 - pipeline: "Update xendit-components-web SDK"
-  trigger_mode: "ON_EVERY_PUSH"
+  trigger_mode: "SCHEDULED"
+  start_date: "2024-01-01T00:00:00Z"
+  delay: 1440
   ref_name: "refs/heads/main"
   ref_type: "BRANCH"
   priority: "NORMAL"
