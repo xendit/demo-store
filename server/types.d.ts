@@ -2,7 +2,7 @@ type Currency = "IDR" | "PHP" | "THB" | "SGD" | "VND" | "HKD";
 
 type PostCheckoutPayload = {
   flow: "pay" | "save" | "pay_save" | "subscription";
-  integration: "session" | "components" | "invoice";
+  integration: "session" | "components" | "components-qr" | "invoice";
   currency: Currency;
   cart: Array<{
     id: number;
