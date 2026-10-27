@@ -58,6 +58,26 @@ const App: React.FC = () => {
     ) ?? config.integrations[0],
   );
 
+  const handleChangeCurrency = useCallback(
+    (currency: string) => {
+      setSelectedCurrency(currency);
+
+      // fallback to payment link if newly selected integration doesn't support this currency
+      if (
+        selectedIntegration.supportedCurrencies &&
+        !selectedIntegration.supportedCurrencies.includes(currency)
+      ) {
+        const compatibleIntegration = config.integrations.find(
+          (integration) => integration.value === "session",
+        );
+        if (compatibleIntegration) {
+          setSelectedIntegration(compatibleIntegration);
+        }
+      }
+    },
+    [selectedIntegration, selectedFlow],
+  );
+
   const [cart, setCart] = useState<CartItem[]>(
     resumed?.cart ?? [{ id: data.products[0].id, quantity: 1 }],
   );
@@ -95,7 +115,7 @@ const App: React.FC = () => {
       return (
         <StorePage
           selectedCurrency={selectedCurrency}
-          onChangeCurrency={setSelectedCurrency}
+          onChangeCurrency={handleChangeCurrency}
           cart={cart}
           onAddToCart={addToCart}
           goToPage={goToPage}

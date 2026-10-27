@@ -157,7 +157,11 @@ export const IntegrationsBar: React.FC<{
             onClick={() => onCheckout()}
           >
             {checkingOut ? <ButtonLoadingSpinner /> : <Cart />}
-            <span>Checkout</span>
+            <span>
+              {selectedIntegration.value === "components-qr"
+                ? "Simulate QR Payment"
+                : "Checkout"}
+            </span>
 
             <span className={classes.cartItemCount}>
               {cart.reduce((total, item) => total + item.quantity, 0)}
