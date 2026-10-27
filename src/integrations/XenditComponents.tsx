@@ -78,7 +78,12 @@ export const XenditComponentsPayment: React.FC<{
     });
 
     return () => {
-      sdkRef.current?.destroyComponent(channelPicker);
+      const channelPickerEl = el.current?.firstElementChild as
+        | HTMLElement
+        | undefined;
+      if (channelPickerEl) {
+        sdkRef.current?.destroyComponent(channelPickerEl);
+      }
     };
   }, [componentsKey, resume]);
 

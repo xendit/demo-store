@@ -17,6 +17,7 @@ export const IntegrationsBar: React.FC<{
   onChangeIntegration: (
     integration: (typeof config.integrations)[number],
   ) => void;
+  selectedCurrency: string;
 }> = (props) => {
   const {
     cart,
@@ -26,7 +27,19 @@ export const IntegrationsBar: React.FC<{
     onChangeFlow,
     selectedIntegration,
     onChangeIntegration,
+    selectedCurrency,
   } = props;
+
+  const availableIntegrations = useMemo(
+    () =>
+      config.integrations.filter(
+        (integration) =>
+          !integration.supportedCurrencies ||
+          integration.supportedCurrencies.includes(selectedCurrency),
+      ),
+    [selectedCurrency],
+  );
+
   const flowPopoverRef = useRef<HTMLDivElement>(null);
   const integrationButtonRef = useRef<HTMLDivElement>(null);
 
@@ -42,7 +55,7 @@ export const IntegrationsBar: React.FC<{
   const handleSelectFlow = (flow: (typeof config.flows)[number]) => {
     onChangeFlow(flow);
     if (selectedIntegration.supportsFlows.indexOf(flow.value) === -1) {
-      const compatibleIntegration = config.integrations.find((integration) =>
+      const compatibleIntegration = availableIntegrations.find((integration) =>
         integration.supportsFlows.includes(flow.value),
       );
       if (compatibleIntegration) {
@@ -112,7 +125,7 @@ export const IntegrationsBar: React.FC<{
               popover="auto"
               ref={integrationButtonRef}
             >
-              {config.integrations.map((integration) => (
+              {availableIntegrations.map((integration) => (
                 <button
                   key={integration.value}
                   className={classes.popoverOption}
@@ -144,7 +157,11 @@ export const IntegrationsBar: React.FC<{
             onClick={() => onCheckout()}
           >
             {checkingOut ? <ButtonLoadingSpinner /> : <Cart />}
-            <span>Checkout</span>
+            <span>
+              {selectedIntegration.value === "components-qr"
+                ? "Simulate QR Payment"
+                : "Checkout"}
+            </span>
 
             <span className={classes.cartItemCount}>
               {cart.reduce((total, item) => total + item.quantity, 0)}

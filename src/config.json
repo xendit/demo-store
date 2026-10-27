@@ -31,9 +31,16 @@
     },
     {
       "value": "components",
-      "title": "Sessions - Xendit Components",
+      "title": "Sessions - Components",
       "description": "Use your own checkout page with our Payment Components.",
       "supportsFlows": ["pay", "save", "pay_save", "subscription"]
+    },
+    {
+      "value": "components-qr",
+      "title": "Sessions - Components - QR Only",
+      "description": "Components integration that auto-submits with QR payment channel.",
+      "supportsFlows": ["pay"],
+      "supportedCurrencies": ["IDR", "SGD", "MYR", "THB"]
     },
     {
       "value": "invoice",
