@@ -1,0 +1,70 @@
+- pipeline: "Update xendit-components-web SDK"
+  trigger_mode: "SCHEDULED"
+  start_date: "2024-01-01T00:00:00Z"
+  delay: 1440
+  ref_name: "refs/heads/main"
+  ref_type: "BRANCH"
+  priority: "NORMAL"
+  fetch_all_refs: true
+  trigger_condition: "ALWAYS"
+  clone_depth: 1
+  always_from_scratch: true
+  actions:
+    - action: "Update SDK and create PR if needed"
+      type: "BUILD"
+      working_directory: "/buddy/demo-store"
+      docker_image_name: "library/node"
+      docker_image_tag: "20"
+      setup_commands:
+        - "apt-get update && apt-get -y install jq"
+      execute_commands:
+        - |
+          set -e
+          CURRENT_VERSION=$(jq -r '.dependencies["xendit-components-web"]' package.json)
+          LATEST_VERSION=$(npm view xendit-components-web version)
+
+          if [ "$CURRENT_VERSION" = "$LATEST_VERSION" ]; then
+            echo "Already up to date ($CURRENT_VERSION)"
+            exit 0
+          fi
+
+          # Check if there's already an open PR for this version
+          EXISTING_PR=$(curl --fail --silent \
+            --url "https://api.github.com/search/issues?q=repo:xendit/demo-store+is:pr+is:open+in:title+xendit-components-web+$LATEST_VERSION" \
+            --header "Accept: application/vnd.github+json" \
+            | jq -r '.items[0].number // empty')
+
+          if [ -n "$EXISTING_PR" ]; then
+            echo "PR already exists for version $LATEST_VERSION (#$EXISTING_PR)"
+            exit 0
+          fi
+
+          echo "Updating $CURRENT_VERSION -> $LATEST_VERSION"
+          jq '.dependencies["xendit-components-web"] = "'"$LATEST_VERSION"'"' package.json > package.json.tmp
+          mv package.json.tmp package.json
+          npm install
+
+          git config user.email "ci@xendit.co"
+          git config user.name "CI"
+          git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/xendit/demo-store.git"
+
+          BRANCH_NAME="chore/update-xendit-components-sdk-$RANDOM"
+          git checkout -b "$BRANCH_NAME"
+          git add package.json package-lock.json
+          git commit --no-verify -m "chore: update xendit-components-web SDK to $LATEST_VERSION"
+          git push origin HEAD --no-verify
+
+          curl --fail --silent --request POST \
+            --url "https://api.github.com/repos/xendit/demo-store/pulls" \
+            --header "Accept: application/vnd.github+json" \
+            --header "Authorization: Bearer $GITHUB_TOKEN" \
+            --header "X-GitHub-Api-Version: 2022-11-28" \
+            --data '{
+              "title": "chore: update xendit-components-web SDK to '"$LATEST_VERSION"'",
+              "body": "Automated PR to update xendit-components-web SDK to version '"$LATEST_VERSION"'.",
+              "head": "'"$BRANCH_NAME"'",
+              "base": "main"
+            }'
+      volume_mappings:
+        - "/:/buddy/demo-store"
+      shell: "BASH"
