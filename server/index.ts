@@ -15,6 +15,8 @@ const app = express();
 app.use(
   helmet({
     contentSecurityPolicy: false,
+    crossOriginOpenerPolicy: false,
+    crossOriginResourcePolicy: false,
   }),
 );
 
